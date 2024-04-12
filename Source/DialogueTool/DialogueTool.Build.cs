@@ -18,13 +18,13 @@ public class DialogueTool : ModuleRules
 			new string[] {
 
 			});
-			
-		
-		PublicDependencyModuleNames.AddRange(
+
+
+        PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
-                "xlnt"
+                "ExcelHelper"
             });
 			
 		

@@ -43,7 +43,7 @@ public class xlnt : ModuleRules
     #region Build for Platforms
     private void BuildForWin64()
     {
-        string DLLPath = Path.Combine(ModuleDirectory, "Win64", ConfigName, String.Format("{0}.dll", LibraryName));
+        string DLLPath = Path.Combine(PluginDirectory, "Binaries/Win64", String.Format("{0}.dll", LibraryName));
         string LIBPath = Path.ChangeExtension(DLLPath, ".lib");
         string PDBPath = Path.ChangeExtension(DLLPath, ".pdb");
         string DirPath = Path.GetDirectoryName(DLLPath);
@@ -90,7 +90,7 @@ public class xlnt : ModuleRules
 
     private static void CopyDirectory(string SrcDir, string DistDir)
     {
-        Console.WriteLine(String.Format("CopyDirectory SrcDir: {0} DistDir: {1}", SrcDir, DistDir));
+        //Console.WriteLine(String.Format("CopyDirectory SrcDir: {0} DistDir: {1}", SrcDir, DistDir));
 
         DirectoryInfo Dir = new DirectoryInfo(SrcDir);
         if (!Dir.Exists)
@@ -101,8 +101,8 @@ public class xlnt : ModuleRules
 
         foreach (FileInfo File in Dir.GetFiles())
         {
-            var targetFilePath = Path.Combine(DistDir, File.Name);
-            File.CopyTo(targetFilePath, true);
+            var TargetFilePath = Path.Combine(DistDir, File.Name);
+            File.CopyTo(TargetFilePath, true);
         }
 
         foreach (var SubDir in Dirs)
@@ -157,7 +157,7 @@ public class xlnt : ModuleRules
         if (ExtraArgs == null)
             ExtraArgs = new Dictionary<string, string>();
 
-        Console.WriteLine("generating {0} library with cmake...", LibraryName);
+        //Console.WriteLine("generating {0} library with cmake...", LibraryName);
 
         var OSPlatform = Environment.OSVersion.Platform;
         if (OSPlatform == PlatformID.Win32NT)

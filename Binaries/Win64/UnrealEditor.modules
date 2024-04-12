@@ -2,6 +2,7 @@
 	"BuildId": "32235091",
 	"Modules": 
 	{
-		"DialogueTool": "UnrealEditor-DialogueTool.dll"
+		"DialogueTool": "UnrealEditor-DialogueTool.dll",
+		"ExcelHelper": "UnrealEditor-ExcelHelper.dll"
 	}
 }
