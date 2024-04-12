@@ -35,13 +35,16 @@ FName FDialogueToolStyle::GetStyleSetName()
 
 const FVector2D Icon16x16(16.0f, 16.0f);
 const FVector2D Icon20x20(20.0f, 20.0f);
+const FVector2D Icon128x128(128.0f, 128.0f);
 
 TSharedRef< FSlateStyleSet > FDialogueToolStyle::Create()
 {
 	TSharedRef< FSlateStyleSet > Style = MakeShareable(new FSlateStyleSet("DialogueToolStyle"));
 	Style->SetContentRoot(IPluginManager::Get().FindPlugin("DialogueTool")->GetBaseDir() / TEXT("Resources"));
 
-	Style->Set("DialogueTool.OpenPluginWindow", new IMAGE_BRUSH(TEXT("Icon20"), Icon20x20));
+	Style->Set("DialogueTool.Icon16x16", new IMAGE_BRUSH(TEXT("Icon16"), Icon16x16));
+	Style->Set("DialogueTool.Icon20x20", new IMAGE_BRUSH(TEXT("Icon20"), Icon20x20));
+	Style->Set("DialogueTool.Icon128x128", new IMAGE_BRUSH(TEXT("Icon128"), Icon128x128));
 
 	return Style;
 }

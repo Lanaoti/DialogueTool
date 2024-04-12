@@ -27,9 +27,7 @@ private:
 
 	void RegisterMenus();
 
-	void AddMenuExtension(FMenuBuilder& Builder);
-
-	void AddProfilerMenu(FMenuBuilder& Builder);
+	void MakeDialogueToolMenu(UToolMenu* InToolMenu);
 
 	TSharedRef<SDockTab> OnSpawnDialogueExcelTool(const FSpawnTabArgs& SpawnTabArgs);
 	TSharedRef<SDockTab> OnSpawnDialogueEditor(const FSpawnTabArgs& SpawnTabArgs);

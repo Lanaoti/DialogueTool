@@ -33,15 +33,15 @@ void FDialogueToolModule::StartupModule()
 		FExecuteAction::CreateRaw(this, &FDialogueToolModule::OnClicked_OpenDialogueEditor),
 		FCanExecuteAction());
 
-	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FDialogueToolModule::RegisterMenus));
-	
 	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(DialogueExcelToolTabName, FOnSpawnTab::CreateRaw(this, &FDialogueToolModule::OnSpawnDialogueExcelTool))
-		.SetDisplayName(LOCTEXT("FDialogueToolTabTitle", "DialogueExcelTool"))
-		.SetMenuType(ETabSpawnerMenuType::Enabled);
+		.SetDisplayName(LOCTEXT("DialogueExcelTool", "DialogueExcelTool"))
+		.SetMenuType(ETabSpawnerMenuType::Hidden);
 
 	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(DialogueEditorTabName, FOnSpawnTab::CreateRaw(this, &FDialogueToolModule::OnSpawnDialogueEditor))
-		.SetDisplayName(LOCTEXT("FDialogueToolTabTitle", "DialogueEditor"))
+		.SetDisplayName(LOCTEXT("DialogueEditor", "DialogueEditor"))
 		.SetMenuType(ETabSpawnerMenuType::Hidden);
+
+	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FDialogueToolModule::RegisterMenus));	
 }
 
 void FDialogueToolModule::ShutdownModule()
@@ -83,50 +83,40 @@ void FDialogueToolModule::RegisterMenus()
 	// Owner will be used for cleanup in call to UToolMenus::UnregisterOwner
 	FToolMenuOwnerScoped OwnerScoped(this);
 
-	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	{
-		TSharedPtr<FExtender> MenuExtender = MakeShareable(new FExtender());
-		MenuExtender->AddMenuExtension("WindowLayout", EExtensionHook::After, PluginCommands, FMenuExtensionDelegate::CreateRaw(this, &FDialogueToolModule::AddMenuExtension));
+		FToolMenuEntry ToolMenuEntry = FToolMenuEntry::InitSubMenu(
+			TEXT("DialogueTool"),
+			LOCTEXT("DialogueTool", "DialogueTool"),
+			FText::GetEmpty(),
+			FNewToolMenuDelegate::CreateRaw(this, &FDialogueToolModule::MakeDialogueToolMenu),
+			false,
+			FSlateIcon(FDialogueToolStyle::GetStyleSetName(), TEXT("DialogueTool.Icon20x20"))
+		);
 
-		LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MenuExtender);
-
-		//UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Window");
-		//{
-		//	FToolMenuSection& Section = Menu->FindOrAddSection("WindowLayout");
-		//	Section.AddEntryObject(MenuExtender);
-		//	Section.AddMenuEntry(MenuExtender)
-		//}
-
-		//UToolMenu* ToolbarMenu = UToolMenus::Get()->ExtendMenu("LevelEditor.LevelEditorToolBar");
-		//{
-		//	FToolMenuSection& Section = ToolbarMenu->FindOrAddSection("Settings");
-		//	{
-		//		FToolMenuEntry& Entry = Section.AddEntry(FToolMenuEntry::InitToolBarButton(FDialogueToolCommands::Get().OpenPluginWindow));
-		//		Entry.SetCommandList(PluginCommands);
-		//	}
-		//}
+		if (UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Tools"))
+		{
+			FToolMenuSection& Section = Menu->FindOrAddSection(TEXT("Developer"), LOCTEXT("Developer", "Developer"));
+			Section.AddEntry(ToolMenuEntry);
+		}
 	}
 }
 
-void FDialogueToolModule::AddMenuExtension(FMenuBuilder& Builder)
+void FDialogueToolModule::MakeDialogueToolMenu(UToolMenu* InToolMenu)
 {
-	Builder.BeginSection("DialogueTool", TAttribute<FText>(FText::FromString("DialogueTool")));
+	if (InToolMenu)
 	{
-		Builder.AddSubMenu(FText::FromString("DialogueTool"),
-			FText::FromString("DONT WORRY BE HAPPY"),
-			FNewMenuDelegate::CreateRaw(this, &FDialogueToolModule::AddProfilerMenu));
-	}
-	Builder.EndSection();
-}
+		{
+			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Tool"), LOCTEXT("Tool", "Tool"));
+			FToolMenuEntry& Entry = Section.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueExcelTool);
+			Entry.SetCommandList(PluginCommands);
+		}
 
-void FDialogueToolModule::AddProfilerMenu(FMenuBuilder& Builder)
-{
-	Builder.BeginSection("DialogueTool", TAttribute<FText>(FText::FromString("DialogueTool")));
-	{
-		Builder.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueExcelTool);
-		Builder.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueEditor);
+		{
+			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Editor"), LOCTEXT("Editor", "Editor"));
+			FToolMenuEntry& Entry = Section.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueEditor);
+			Entry.SetCommandList(PluginCommands);
+		}
 	}
-	Builder.EndSection();
 }
 
 #undef LOCTEXT_NAMESPACE

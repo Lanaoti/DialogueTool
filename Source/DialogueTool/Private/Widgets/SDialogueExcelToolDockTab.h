@@ -4,6 +4,9 @@
 
 #include "Widgets/Docking/SDockTab.h"
 
+
+class FTabManager;
+
 class SDialogueExcelToolDockTab : public SDockTab
 {
 public:
@@ -11,5 +14,14 @@ public:
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);
+
+    void HandlePullDownFileMenu(FMenuBuilder& MenuBuilder);
+    void HandlePullDownEditMenu(FMenuBuilder& MenuBuilder);
+
+protected:
+    void OnClicked_OpenExcel();
+
+private:
+    TSharedPtr<FTabManager> TabManager;
 };
 
