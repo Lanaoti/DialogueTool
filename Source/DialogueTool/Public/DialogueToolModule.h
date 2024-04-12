@@ -5,10 +5,10 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-/**
- * This is the module definition for the editor mode. You can implement custom functionality
- * as your plugin module starts up and shuts down. See IModuleInterface for more extensibility options.
- */
+class SDockTab;
+class FToolBarBuilder;
+class FMenuBuilder;
+
 class FDialogueToolModule : public IModuleInterface
 {
 public:
@@ -16,4 +16,24 @@ public:
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+	
+	/** On clicked open dialogue excel tool */
+	void OnClicked_OpenDialogueExcelTool();
+
+	/** On clicked open dialogue editor */
+	void OnClicked_OpenDialogueEditor();
+
+private:
+
+	void RegisterMenus();
+
+	void AddMenuExtension(FMenuBuilder& Builder);
+
+	void AddProfilerMenu(FMenuBuilder& Builder);
+
+	TSharedRef<SDockTab> OnSpawnDialogueExcelTool(const FSpawnTabArgs& SpawnTabArgs);
+	TSharedRef<SDockTab> OnSpawnDialogueEditor(const FSpawnTabArgs& SpawnTabArgs);
+
+private:
+	TSharedPtr<class FUICommandList> PluginCommands;
 };
