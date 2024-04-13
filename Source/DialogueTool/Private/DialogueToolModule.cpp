@@ -95,7 +95,8 @@ void FDialogueToolModule::RegisterMenus()
 
 		if (UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Tools"))
 		{
-			FToolMenuSection& Section = Menu->FindOrAddSection(TEXT("Developer"), LOCTEXT("Developer", "Developer"));
+			FToolMenuSection& Section = Menu->FindOrAddSection(TEXT("Developer"));
+			Section.Label = LOCTEXT("Developer", "Developer");
 			Section.AddEntry(ToolMenuEntry);
 		}
 	}
@@ -106,13 +107,17 @@ void FDialogueToolModule::MakeDialogueToolMenu(UToolMenu* InToolMenu)
 	if (InToolMenu)
 	{
 		{
-			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Tool"), LOCTEXT("Tool", "Tool"));
+			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Tool"));
+			Section.Label = LOCTEXT("Tool", "Tool");
+
 			FToolMenuEntry& Entry = Section.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueExcelTool);
 			Entry.SetCommandList(PluginCommands);
 		}
 
 		{
-			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Editor"), LOCTEXT("Editor", "Editor"));
+			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Editor"));
+			Section.Label = LOCTEXT("Editor", "Editor");
+
 			FToolMenuEntry& Entry = Section.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueEditor);
 			Entry.SetCommandList(PluginCommands);
 		}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Widgets/Docking/SDockTab.h"
+#include "WorkBook.h"
 
 
 class FTabManager;
@@ -20,8 +21,16 @@ public:
 
 protected:
     void OnClicked_OpenExcel();
+    void OnClicked_SaveCurrentExcel();
+    void OnClicked_SaveCurrentExcelAs();
+
+    bool IsVaildWorkBook() const;
 
 private:
+    FWorkBook WorkBook;
+
     TSharedPtr<FTabManager> TabManager;
+
+    TSharedPtr<class FUICommandList> TapCommands;
 };
 
