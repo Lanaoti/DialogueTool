@@ -4,10 +4,6 @@
 
 #include "CoreMinimal.h"
 
-#if EXCELANALYSIS_WITH_XLINT
-#include <xlnt/xlnt.hpp>
-#endif
-
 #include "WorkBook.generated.h"
 
 
@@ -35,27 +31,6 @@ public:
 	virtual bool SaveAs(const FString& Filename) { return false; }
 };
 
-#if EXCELANALYSIS_WITH_XLINT
-/// <summary>
-/// 基于xlnt库实现
-/// </summary>
-class EXCELHELPER_API FWorkBookWarpper_xlnt : public FWorkBookWarpper
-{
-public:
-	/// FWorkBookWarpper
-	virtual bool Load(const FString& Filename, const FString& Password = TEXT("")) override;
-	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet(const FString& Title) override;
-	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet(int32 Index) override;
-	virtual TSharedPtr<FWorkSheetWarpper> CreateWorkSheet(int32 Index = INDEX_NONE) override;
-	virtual TArray<FString> GetTitles() const override;
-	virtual int32 Num() const override;
-	virtual int32 IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet) override;
-	/// FWorkBookWarpper
-
-private:
-	xlnt::workbook WorkBook;
-};
-#endif
 
 /// <summary>
 /// 工作表迭代器
@@ -150,16 +125,8 @@ struct EXCELHELPER_API FWorkBook
 	GENERATED_BODY()
 
 public:
-#if EXCELANALYSIS_WITH_XLINT
-	template<typename T = FWorkBookWarpper_xlnt>
-#else
-	template<typename T = FWorkBookWarpper>
-#endif
-	FWorkBook()
-		: WorkBook(MakeShareable(new T()))
-	{
+	FWorkBook();
 
-	}
 	/// <summary>
 	/// 验证工作簿是否有效
 	/// </summary>

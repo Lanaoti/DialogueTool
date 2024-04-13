@@ -4,7 +4,8 @@
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/SCompoundWidget.h"
 #include "GraphEditor.h"
-#include "ExcelHelper\Classes\WorkBook.h"
+#include "ExcelHelper.h"
+
 
 class SDialogueToolGraphWindow :public SCompoundWidget
 {

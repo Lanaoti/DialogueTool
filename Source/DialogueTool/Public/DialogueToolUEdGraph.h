@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Uobject/objectMacros.h"
 #include "EdGraph/EdGraph.h"
-#include "ExcelHelper\Classes\WorkBook.h"
+#include "ExcelHelper.h"
 #include "DialogueToolUEdGraph.generated.h"
 
 UCLASS()

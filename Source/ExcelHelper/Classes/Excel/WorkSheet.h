@@ -3,11 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
-#if EXCELANALYSIS_WITH_XLINT
-#include <xlnt/xlnt.hpp>
-#endif
-
 #include "WorkBook.h"
 #include "WorkSheet.generated.h"
 
@@ -21,40 +16,11 @@ public:
 	FWorkSheetWarpper() {}
 	virtual ~FWorkSheetWarpper() {}
 
-	template<typename WS> FWorkSheetWarpper(const WS* InWS)
-	{
-
-	}
-
 	virtual FString GetTitle() const { return TEXT(""); }
+	virtual int32 Columns(bool bSkipNull = false) const { return 0; }
+	virtual int32 Rows(bool bSkipNull = false) const { return 0; }
 };
 
-#if EXCELANALYSIS_WITH_XLINT
-/// <summary>
-/// 基于xlnt库实现
-/// </summary>
-class EXCELHELPER_API FWorkSheetWarpper_xlnt : public FWorkSheetWarpper
-{
-public:
-	FWorkSheetWarpper_xlnt()
-	{
-
-	}
-
-	FWorkSheetWarpper_xlnt(const xlnt::worksheet* InWorkSheet)
-		: WorkSheet(*InWorkSheet)
-	{
-
-	}
-	
-	friend class FWorkBookWarpper_xlnt;
-
-	virtual FString GetTitle() const;
-
-private:
-	xlnt::worksheet WorkSheet;
-};
-#endif
 
 USTRUCT(BlueprintType)
 struct EXCELHELPER_API FWorkSheet
@@ -75,8 +41,11 @@ public:
 
 	}
 
-	UPROPERTY(BlueprintReadOnly, Category = Excel)
-	FWorkBook WorkBook;
+	/// <summary>
+	/// 获取工作簿
+	/// </summary>
+	/// <returns>工作簿对象</returns>
+	FWorkBook GetWorkBook() const;
 
 	/// <summary>
 	/// 获取工作表标题
@@ -84,7 +53,25 @@ public:
 	/// <returns>标题</returns>
 	FString GetTitle() const;
 
+	/// <summary>
+	/// 工作表列数
+	/// </summary>
+	/// <param name="bSkipNull">是否跳过空</param>
+	/// <returns>数量</returns>
+	int32 Columns(bool bSkipNull = false) const;
+
+	/// <summary>
+	/// 工作表行数
+	/// </summary>
+	/// <param name="bSkipNull">是否跳过空</param>
+	/// <returns>数量</returns>
+	int32 Rows(bool bSkipNull = false) const;
+
 	friend struct FWorkBook;
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = Excel)
+	FWorkBook WorkBook;
 
 private:
 	TSharedPtr<FWorkSheetWarpper> WorkSheet;

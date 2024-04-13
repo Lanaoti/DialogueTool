@@ -27,6 +27,7 @@ public class xlnt : ModuleRules
         LibraryDir = Path.Combine(String.Format("xlnt-{0}", Version));
         BuildSystem = GetBuildSystem();
         ConfigName = GetConfigName();
+        LibraryName = (ConfigName == "Debug") ? (LibraryName + "d") : LibraryName;
 
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, LibraryDir, "include"));
 
@@ -48,9 +49,8 @@ public class xlnt : ModuleRules
         string PDBPath = Path.ChangeExtension(DLLPath, ".pdb");
         string DirPath = Path.GetDirectoryName(DLLPath);
 
-        Console.WriteLine(DLLPath);
-
         bool bIsDebug = (ConfigName == "Debug");
+
         List<string> DistFiles = new List<string> { DLLPath, LIBPath };
         if (bIsDebug)
         {
@@ -147,7 +147,8 @@ public class xlnt : ModuleRules
     private string GetConfigName()
     {
         if (Target.Configuration == UnrealTargetConfiguration.Debug
-            || Target.Configuration == UnrealTargetConfiguration.DebugGame)
+            || Target.Configuration == UnrealTargetConfiguration.DebugGame
+            )
             return "Debug";
         return "Release";
     }
@@ -181,8 +182,10 @@ public class xlnt : ModuleRules
                     Writer.Write("cmake -G \"{0}\" ../ ", BuildSystem);
                 var Args = new Dictionary<string, string>
                 {
-                    { "XLNT_EXPORT", "1" },
-                    { "XLNT_SHARED", "1" },
+                    { "TESTS", "0" },
+                    { "STATIC", "0" },
+                    { "STATIC_CRT", "OFF" },
+                    { "XLNT_CXX_LANG", "14" },
                 };
                 foreach (var Arg in Args)
                     Writer.Write(" -D{0}=\"{1}\"", Arg.Key, Arg.Value);
