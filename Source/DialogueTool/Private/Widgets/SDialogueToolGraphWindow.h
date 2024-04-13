@@ -4,6 +4,7 @@
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/SCompoundWidget.h"
 #include "GraphEditor.h"
+#include "ExcelHelper\Classes\WorkBook.h"
 
 class SDialogueToolGraphWindow :public SCompoundWidget
 {
@@ -14,7 +15,7 @@ public:
 	SLATE_END_ARGS()
 
 	/** Constructs this widget with InArgs */
-	void Construct(const FArguments& InArgs);
+	void Construct(const FArguments& InArgs, const FWorkBook& WorkBook);
 	
 	// Í¼±í±à¼­Æ÷¿Ø¼þ
 	TSharedPtr<SGraphEditor>GraphEditorPtr;

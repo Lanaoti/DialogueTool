@@ -17,7 +17,7 @@ void SDialogueEditorDockTab::Construct(const FArguments& InArgs)
 		LOCTEXT("WindowWidgetText", "Add code in {0} to override this window's contents"),
 		FText::FromString(TEXT("SDialogueEditorDockTab.cpp")));
 
-	TSharedRef<SWidget> NewContent = SNew(SDialogueToolGraphWindow);
+	TSharedRef<SWidget> NewContent = SNew(SDialogueToolGraphWindow, FWorkBook());
 
 	SetContent(NewContent);
 }

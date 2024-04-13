@@ -16,7 +16,12 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct( const FArguments& InArgs, UDialogueToolUEdGraphNode* InNode );
 		
-	//SGraphNode implementation
-	//virtual void UpdateGraphNode() override;
-	//End SGraphNode implementation
+protected:
+	virtual TSharedRef<SWidget> CreateNodeContentArea() override;
+
+
+private:
+	TSharedPtr<SVerticalBox> DialogueTextBox;
+
+	TSharedRef<SWidget> CreateDialogueText();
 };

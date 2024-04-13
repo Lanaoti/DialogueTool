@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Uobject/objectMacros.h"
 #include "EdGraph/EdGraph.h"
+#include "ExcelHelper\Classes\WorkBook.h"
 #include "DialogueToolUEdGraph.generated.h"
 
 UCLASS()
@@ -12,7 +13,13 @@ class UDialogueToolUEdGraph : public UEdGraph
 
 public:
 
-	void ReBiuldGraph();
+	void ReBiuldGraph(const FWorkBook& WorkBook);
 
 	class UDialogueToolUEdGraphNode* CreateTestNode();
+
+private:
+
+	float NodeX = 0.0f;
+
+	float NodeY = 0.0f;
 };

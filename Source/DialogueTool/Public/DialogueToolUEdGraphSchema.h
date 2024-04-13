@@ -14,4 +14,9 @@ class UDialogueToolUEdGraphSchema : public UEdGraphSchema
 	{
 		return FPinConnectionResponse(CONNECT_RESPONSE_MAKE, TEXT("OK"));
 	}
+
+	virtual FLinearColor GetPinTypeColor(const FEdGraphPinType& PinType) const override 
+	{
+		return FLinearColor::White;
+	}
 };

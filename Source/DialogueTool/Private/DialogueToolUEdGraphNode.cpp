@@ -17,3 +17,8 @@ FText UDialogueToolUEdGraphNode::GetNodeTitle(ENodeTitleType::Type TitleType) co
 {
 	return FText::FromString(TEXT("Dialogue"));
 }
+
+FLinearColor UDialogueToolUEdGraphNode::GetNodeTitleColor() const
+{
+	return FLinearColor(128, 0, 128);
+}

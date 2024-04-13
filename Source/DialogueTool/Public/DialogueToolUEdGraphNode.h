@@ -10,7 +10,11 @@ class UDialogueToolUEdGraphNode : public UEdGraphNode
 {
 	GENERATED_UCLASS_BODY()
 
+	TArray<FText> DialogueTexts;
+
 	virtual void AllocateDefaultPins() override;
 
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
+
+	virtual FLinearColor GetNodeTitleColor() const override;
 };

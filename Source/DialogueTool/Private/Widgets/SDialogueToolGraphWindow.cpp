@@ -2,11 +2,11 @@
 #include "DialogueToolUEdGraph.h"
 #include "DialogueToolUEdGraphSchema.h"
 
-void SDialogueToolGraphWindow::Construct(const FArguments& InArgs)
+void SDialogueToolGraphWindow::Construct(const FArguments& InArgs, const FWorkBook& WorkBook)
 {
 	Graphobj = NewObject<UDialogueToolUEdGraph>();
 	Graphobj->Schema = UDialogueToolUEdGraphSchema::StaticClass();
-	Graphobj->ReBiuldGraph();
+	Graphobj->ReBiuldGraph(WorkBook);
 	Graphobj->AddToRoot();
 
 	GraphEditorPtr = SNew(SGraphEditor)

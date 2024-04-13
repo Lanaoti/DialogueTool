@@ -1,85 +1,64 @@
 #include "SDialogueToolGraphNode.h"
-#include "SDialogueToolGraphNode.h"
 #include "EditorStyleSet.h"
+#include "Widgets\SBoxPanel.h"
+#include "DialogueToolUEdGraphNode.h"
 
 void SDialogueToolGraphNode::Construct(const FArguments& InArgs, UDialogueToolUEdGraphNode* InNode)
 {
 	GraphNode = InNode;
 	UpdateGraphNode();
+	CreateDialogueText();
 }
 
-//void SDialogueToolGraphNode::UpdateGraphNode()
-//{
-//	RightNodeBox.Reset();
-//	LeftNodeBox.Reset();
-//
-//	GetOrAddSlot(ENodeZone::Center)
-//	.HAlign(HAlign_Center)
-//	.VAlign(VAlign_Center)
-//	[
-//		SNew(SVerticalBox)
-//		+ SVerticalBox::Slot()
-//		.AutoHeight()
-//		[
-//			SNew(SBorder)
-//			.BorderImage(FEditorStyle::GetBrush("Graph.Node.Body"))
-//			.Padding(0)
-//			[
-//				SNew(SVerticalBox)
-//				+ SVerticalBox::Slot()
-//				.AutoHeight()
-//				.HAlign(HAlign_Fill)
-//				.VAlign(VAlign_Top)
-//				[
-//					// NODE CONTENT AREA
-//					SNew(SBorder)
-//					.BorderImage(FEditorStyle::GetBrush("NoBorder"))
-//					.HAlign(HAlign_Fill)
-//					.VAlign(VAlign_Fill)
-//					.Padding(FMargin(0, 3))
-//					[
-//						SNew(SHorizontalBox)
-//						+ SHorizontalBox::Slot()
-//						.AutoWidth()
-//						.VAlign(VAlign_Center)
-//						[
-//							// LEFT
-//							SNew(SBox)
-//							.WidthOverride(40)
-//							[
-//								SAssignNew(LeftNodeBox, SVerticalBox)
-//							]
-//						]
-//						
-//						+ SHorizontalBox::Slot()
-//						.VAlign(VAlign_Center)
-//						.HAlign(HAlign_Center)
-//						.FillWidth(1.0f)
-//						[
-//							SNew(STextBlock).Text(FText::FromString("hello World"))
-//						]
-//												
-//						+ SHorizontalBox::Slot()
-//						.AutoWidth()
-//						.VAlign(VAlign_Center)
-//						[
-//							// RIGHT
-//							SNew(SBox)
-//							.WidthOverride(40)
-//							[
-//								SAssignNew(RightNodeBox, SVerticalBox)
-//							]
-//						]
-//
-//					]
-//
-//				]
-//	
-//			]
-//
-//		]
-//
-//	];
-//
-//	CreatePinWidgets();
-//}
+TSharedRef<SWidget> SDialogueToolGraphNode::CreateNodeContentArea()
+{
+	// NODE CONTENT AREA
+	return SNew(SBorder)
+		.BorderImage(FAppStyle::GetBrush("NoBorder"))
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Fill)
+		.Padding(FMargin(0, 3))
+		[
+			SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot()
+				.HAlign(HAlign_Left)
+				.AutoWidth()
+				[
+					// LEFT
+					SAssignNew(LeftNodeBox, SVerticalBox)
+				]
+
+				+ SHorizontalBox::Slot()
+				.HAlign(HAlign_Center)
+				.FillWidth(1.0f)
+				[
+					SAssignNew(DialogueTextBox, SVerticalBox)
+				]
+
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				.HAlign(HAlign_Right)
+				[
+					// RIGHT
+					SAssignNew(RightNodeBox, SVerticalBox)
+				]
+		];
+}
+
+TSharedRef<SWidget> SDialogueToolGraphNode::CreateDialogueText()
+{
+	UDialogueToolUEdGraphNode* TestNode = Cast<UDialogueToolUEdGraphNode>(GraphNode);
+	auto Num = TestNode->DialogueTexts.Num();
+	UE_LOG(LogTemp, Log, TEXT("TestNode TestNode TestNode:%d"), Num);
+
+	for (int i = 0; i< Num; ++i)
+	{
+		FText TempText = TestNode->DialogueTexts[i];
+
+		auto NewSlot = DialogueTextBox->AddSlot();
+		NewSlot.AutoHeight();
+		NewSlot.AttachWidget(SNew(STextBlock).Text(TempText));
+	}
+
+	return DialogueTextBox.ToSharedRef();
+}

@@ -13,6 +13,7 @@ public:
 	FDialogueToolCommands()
 		: TCommands<FDialogueToolCommands>(TEXT("DialogueTool"), NSLOCTEXT("Contexts", "DialogueTool", "DialogueTool Plugin"), NAME_None, FDialogueToolStyle::GetStyleSetName())
 	{
+
 	}
 
 	// TCommands<> interface
@@ -21,4 +22,7 @@ public:
 public:
 	TSharedPtr< FUICommandInfo > OpenDialogueExcelTool;
 	TSharedPtr< FUICommandInfo > OpenDialogueEditor;
+	TSharedPtr< FUICommandInfo > OpenExcel;
+	TSharedPtr< FUICommandInfo > SaveCurrentExcel;
+	TSharedPtr< FUICommandInfo > SaveCurrentExcelAs;
 };

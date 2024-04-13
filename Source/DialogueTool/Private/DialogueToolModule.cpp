@@ -101,6 +101,7 @@ void FDialogueToolModule::RegisterMenus()
 		if (UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Tools"))
 		{
 			FToolMenuSection& Section = Menu->FindOrAddSection(TEXT("Developer"));
+			Section.Label = LOCTEXT("Developer", "Developer");			
 			Section.AddEntry(ToolMenuEntry);
 		}
 	}
@@ -118,8 +119,10 @@ void FDialogueToolModule::MakeDialogueToolMenu(UToolMenu* InToolMenu)
 			Entry.SetCommandList(PluginCommands);
 		}
 
-		{
+		{			
 			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Editor"));
+			Section.Label = LOCTEXT("Editor", "Editor");			
+			
 			FToolMenuEntry& Entry = Section.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueEditor);
 			Entry.SetCommandList(PluginCommands);
 		}

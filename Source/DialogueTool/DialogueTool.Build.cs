@@ -38,6 +38,7 @@ public class DialogueTool : ModuleRules
 				"InputCore",
                 "ToolMenus",
                 "Projects",
+                "MainFrame",
                 "EditorFramework",
 				"EditorStyle",
 				"UnrealEd",
