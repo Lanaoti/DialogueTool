@@ -6,6 +6,8 @@
 #include "WorkBook.h"
 
 
+class SWidget;
+class SOverlay;
 class FTabManager;
 
 class SDialogueExcelToolDockTab : public SDockTab
@@ -16,6 +18,10 @@ public:
 
     void Construct(const FArguments& InArgs);
 
+protected:
+    virtual TSharedRef<SWidget> MakeMenuBar();
+    virtual TSharedRef<SWidget> MakeWorkBookWidget(const FWorkBook& InWorkBook);
+
     void HandlePullDownFileMenu(FMenuBuilder& MenuBuilder);
     void HandlePullDownEditMenu(FMenuBuilder& MenuBuilder);
 
@@ -24,10 +30,15 @@ protected:
     void OnClicked_SaveCurrentExcel();
     void OnClicked_SaveCurrentExcelAs();
 
+    void UpdateWorkBookWidget();
     bool IsVaildWorkBook() const;
 
 private:
     FWorkBook WorkBook;
+
+    TSharedPtr<STextBlock> FilenameTextBlock;
+
+    TSharedPtr<SOverlay> Content;
 
     TSharedPtr<FTabManager> TabManager;
 

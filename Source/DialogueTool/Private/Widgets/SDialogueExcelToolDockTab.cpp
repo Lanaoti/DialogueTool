@@ -7,6 +7,7 @@
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Styling/AppStyle.h"
+#include "DesktopPlatformModule.h"
 
 
 #define LOCTEXT_NAMESPACE "SDialogueExcelToolDockTab"
@@ -17,9 +18,6 @@ void SDialogueExcelToolDockTab::Construct(const FArguments& InArgs)
 		.TabRole(ETabRole::NomadTab));
 
 	SetTabIcon(FDialogueToolStyle::Get().GetBrush(TEXT("DialogueTool.Icon128x128")));
-
-	TSharedRef<SDialogueExcelToolDockTab> ThisRef = StaticCastSharedRef<SDialogueExcelToolDockTab>(AsShared());
-	TabManager = FGlobalTabmanager::Get()->NewTabManager(ThisRef);
 
 	TapCommands = MakeShareable(new FUICommandList);
 
@@ -38,7 +36,56 @@ void SDialogueExcelToolDockTab::Construct(const FArguments& InArgs)
 		FExecuteAction::CreateRaw(this, &SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs),
 		FCanExecuteAction::CreateSP(this, &SDialogueExcelToolDockTab::IsVaildWorkBook));
 
+	FilenameTextBlock = SNew(STextBlock);
+
+	TSharedRef<SWidget> TitleBarRightContent = SNew(SOverlay)
+		+ SOverlay::Slot()
+		.HAlign(HAlign_Right)
+		.VAlign(VAlign_Center)
+		[
+			FilenameTextBlock.ToSharedRef()
+		];
+
+	SetTitleBarRightContent(TitleBarRightContent);
+
+	Content = SNew(SOverlay);
+
+	TSharedRef<SWidget> MenuWidget = MakeMenuBar();
+	TSharedRef<SWidget> NewContent = SNew(SBorder)
+		.BorderImage(FCoreStyle::Get().GetBrush("ToolPanel.GroupBorder"))
+		.BorderBackgroundColor(FLinearColor::Black)
+		[
+			SNew(SVerticalBox)
+
+			+ SVerticalBox::Slot()
+			.AutoHeight()
+			.Padding(FMargin(0.0f, 4.0f, 0.0f, 0.0f))
+			[
+				MenuWidget
+			]
+			
+			+ SVerticalBox::Slot()
+			.Padding(FMargin(0.0f, 4.0f, 0.0f, 0.0f))
+			[
+				SNew(SBorder)
+				.BorderImage(FCoreStyle::Get().GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(FLinearColor::Gray)
+				[
+					Content.ToSharedRef()
+				]
+			]
+		];
+
+	SetContent(NewContent);
+}
+
+TSharedRef<SWidget> SDialogueExcelToolDockTab::MakeMenuBar()
+{
+	TSharedRef<SDialogueExcelToolDockTab> ThisRef = StaticCastSharedRef<SDialogueExcelToolDockTab>(AsShared());
+	TabManager = FGlobalTabmanager::Get()->NewTabManager(ThisRef);
+
 	FMenuBarBuilder MenuBarBuilder = FMenuBarBuilder(TSharedPtr<FUICommandList>());
+	MenuBarBuilder.PushCommandList(TapCommands.ToSharedRef());
 	MenuBarBuilder.AddPullDownMenu(
 		LOCTEXT("FileLabel", "File"),
 		FText::GetEmpty(),
@@ -56,27 +103,12 @@ void SDialogueExcelToolDockTab::Construct(const FArguments& InArgs)
 	const TSharedRef<SWidget> MenuWidget = MenuBarBuilder.MakeWidget();
 	TabManager->SetMenuMultiBox(MenuBarBuilder.GetMultiBox(), MenuWidget);
 
-	TSharedRef<SWidget> NewContent = SNew(SBorder)
-		.BorderImage(FCoreStyle::Get().GetBrush("ToolPanel.GroupBorder"))
-		.BorderBackgroundColor(FLinearColor::Gray)
-		[
-			SNew(SVerticalBox)
+	return MenuWidget;
+}
 
-			+ SVerticalBox::Slot()
-			.AutoHeight()
-			.Padding(FMargin(0.0f, 4.0f, 0.0f, 0.0f))
-			[
-				MenuWidget
-			]
-			
-			//+ SVerticalBox::Slot()
-			//.Padding(FMargin(0.0f, 4.0f, 0.0f, 0.0f))
-			//[
-			//	TabManager->RestoreFrom(Layout, nullptr).ToSharedRef()
-			//]
-		];
-
-	SetContent(NewContent);
+TSharedRef<SWidget> SDialogueExcelToolDockTab::MakeWorkBookWidget(const FWorkBook& InWorkBook)
+{
+	return SNew(SVerticalBox);
 }
 
 void SDialogueExcelToolDockTab::HandlePullDownFileMenu(FMenuBuilder& MenuBuilder)
@@ -100,30 +132,34 @@ void SDialogueExcelToolDockTab::HandlePullDownEditMenu(FMenuBuilder& MenuBuilder
 
 void SDialogueExcelToolDockTab::OnClicked_OpenExcel()
 {
-	//TSharedPtr<SWindow> ParentWindow;
-	//if (FModuleManager::Get().IsModuleLoaded("MainFrame"))
-	//{
-	//	IMainFrameModule& MainFrame = FModuleManager::LoadModuleChecked<IMainFrameModule>("MainFrame");
-	//	ParentWindow = MainFrame.GetParentWindow();
-	//}
+	if (IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get())
+	{
+		TArray<FString> FileTypes;
+		FileTypes.Add("Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx");
 
-	//TSharedRef<SWindow> Window =
-	//	SNew(SWindow).Title(LOCTEXT("MDLImportOptionsTitle", "MDL Import Options")).SizingRule(ESizingRule::Autosized);
+		TArray<FString> OutFileNames;
+		const bool bFileDialogOpened = DesktopPlatform->OpenFileDialog(
+			FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr),
+			LOCTEXT("ChooseAnExcelFile", "Choose an excel file").ToString(),
+			TEXT(""),
+			TEXT(""),
+			FileTypes[0],
+			EFileDialogFlags::None,
+			OutFileNames
+		);
 
-	//TSharedPtr<SMDLOptionsWindow> OptionsWindow;
-	//Window->SetContent(
-	//	SAssignNew(OptionsWindow, SMDLOptionsWindow)
-	//	.ImportOptions(&ImporterOptions)
-	//	.WidgetWindow(Window)
-	//	.FileNameText(FText::Format(LOCTEXT("MDLImportOptionsFileName", "  Import File  :    {0}"),
-	//		FText::FromString(FPaths::GetCleanFilename(Filepath))))
-	//	.FilePathText(FText::FromString(Filepath))
-	//	.PackagePathText(FText::Format(LOCTEXT("MDLImportOptionsPackagePath", "  Import To   :    {0}"), FText::FromString(PackagePath)))
-	//	.MaterialCount(GetMaterialCount(Filepath)));
-	//FSlateApplication::Get().AddModalWindow(Window, ParentWindow, false);
-	//return OptionsWindow->ShouldImport();
+		if (bFileDialogOpened && OutFileNames.Num() > 0)
+		{
+			WorkBook.Load(OutFileNames[0]);
 
-	UE_LOG(LogTemp, Log, TEXT("SDialogueExcelToolDockTab::OnClicked_OpenExcel"));
+			if (FilenameTextBlock.IsValid())
+			{
+				FilenameTextBlock->SetText(FText::FromString(OutFileNames[0]));
+			}
+
+			UpdateWorkBookWidget();
+		}
+	}
 }
 
 void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcel()
@@ -134,6 +170,11 @@ void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcel()
 void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs()
 {
 	UE_LOG(LogTemp, Log, TEXT("SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs"));
+}
+
+void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
+{
+
 }
 
 bool SDialogueExcelToolDockTab::IsVaildWorkBook() const
