@@ -16,8 +16,10 @@ public class ExcelHelper : ModuleRules
     public ExcelHelper(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
+
+        OptimizeCode = CodeOptimization.InShippingBuildsOnly;
+
+        PublicIncludePaths.AddRange(
 			new string[] {
 
 			});

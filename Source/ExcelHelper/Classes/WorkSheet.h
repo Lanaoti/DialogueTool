@@ -25,6 +25,8 @@ public:
 	{
 
 	}
+
+	virtual FString GetTitle() const { return TEXT(""); }
 };
 
 #if EXCELANALYSIS_WITH_XLINT
@@ -44,6 +46,10 @@ public:
 	{
 
 	}
+	
+	friend class FWorkBookWarpper_xlnt;
+
+	virtual FString GetTitle() const;
 
 private:
 	xlnt::worksheet WorkSheet;
@@ -71,6 +77,14 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = Excel)
 	FWorkBook WorkBook;
+
+	/// <summary>
+	/// 获取工作表标题
+	/// </summary>
+	/// <returns>标题</returns>
+	FString GetTitle() const;
+
+	friend struct FWorkBook;
 
 private:
 	TSharedPtr<FWorkSheetWarpper> WorkSheet;

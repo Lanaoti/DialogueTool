@@ -174,7 +174,16 @@ void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs()
 
 void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
 {
+	TArray<FString> Titles = WorkBook.GetTitles();
+	for (const FString& Title : Titles)
+	{
+		UE_LOG(LogTemp, Log, TEXT("WorkSheet1 title: %s"), *Title);
+	}
 
+	for (const FWorkSheet& WorkSheet : WorkBook)
+	{
+		UE_LOG(LogTemp, Log, TEXT("WorkSheet2 title: %s"), *WorkSheet.GetTitle());
+	}
 }
 
 bool SDialogueExcelToolDockTab::IsVaildWorkBook() const

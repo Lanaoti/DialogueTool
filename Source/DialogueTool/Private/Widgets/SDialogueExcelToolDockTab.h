@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Widgets/Docking/SDockTab.h"
-#include "WorkBook.h"
+#include "ExcelHelper.h"
 
 
 class SWidget;
