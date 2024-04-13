@@ -46,8 +46,9 @@ public class DialogueTool : ModuleRules
 				"UnrealEd",
 				"LevelEditor",
 				"InteractiveToolsFramework",
-				"EditorInteractiveToolsFramework"
-			});
+				"EditorInteractiveToolsFramework",
+                "GraphEditor",
+            });
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(

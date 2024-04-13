@@ -8,6 +8,8 @@
 #include "Widgets/SDialogueEditorDockTab.h"
 #include "Widgets/SDialogueExcelToolDockTab.h"
 #include "ToolMenus.h"
+#include "EdGraphUtilities.h"
+#include "DialogueToolGraphNodeFactory.h"
 
 static const FName DialogueExcelToolTabName("DialogueExcelTool");
 static const FName DialogueEditorTabName("DialogueEditor");
@@ -16,6 +18,9 @@ static const FName DialogueEditorTabName("DialogueEditor");
 
 void FDialogueToolModule::StartupModule()
 {
+	//注册图表节点工厂
+	FEdGraphUtilities::RegisterVisualNodeFactory(MakeShareable(new FDialogueToolNodeFactory()));
+
 	FDialogueToolStyle::Initialize();
 	FDialogueToolStyle::ReloadTextures();
 
@@ -96,7 +101,7 @@ void FDialogueToolModule::RegisterMenus()
 		if (UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Tools"))
 		{
 			FToolMenuSection& Section = Menu->FindOrAddSection(TEXT("Developer"));
-			Section.Label = LOCTEXT("Developer", "Developer");
+			Section.Label = LOCTEXT("Developer", "Developer");			
 			Section.AddEntry(ToolMenuEntry);
 		}
 	}
@@ -114,10 +119,10 @@ void FDialogueToolModule::MakeDialogueToolMenu(UToolMenu* InToolMenu)
 			Entry.SetCommandList(PluginCommands);
 		}
 
-		{
+		{			
 			FToolMenuSection& Section = InToolMenu->FindOrAddSection(TEXT("Editor"));
-			Section.Label = LOCTEXT("Editor", "Editor");
-
+			Section.Label = LOCTEXT("Editor", "Editor");			
+			
 			FToolMenuEntry& Entry = Section.AddMenuEntry(FDialogueToolCommands::Get().OpenDialogueEditor);
 			Entry.SetCommandList(PluginCommands);
 		}
