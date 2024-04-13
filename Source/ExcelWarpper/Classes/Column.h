@@ -10,7 +10,7 @@
 /// <summary>
 /// 行包装器接口
 /// </summary>
-class EXCELHELPER_API FColumnWarpper
+class EXCELWARPPER_API FColumnWarpper
 {
 
 };

@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Excel/WorkBook.h"
-#include "Excel/WorkSheet.h"
-#include "Excel/Row.h"
-#include "Excel/Column.h"
-#include "Excel/Cell.h"
+#include "WorkBook.h"
+#include "WorkSheet.h"
+#include "Row.h"
+#include "Column.h"
+#include "Cell.h"
 
-class FExcelHelper
+class FExcelWarpper
 {
 public:
 	static TSharedPtr<FWorkBookWarpper> MakeWorkBookWarpper();

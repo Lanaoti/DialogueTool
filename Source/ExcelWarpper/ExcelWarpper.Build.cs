@@ -2,18 +2,9 @@
 
 using UnrealBuildTool;
 
-public class ExcelHelper : ModuleRules
+public class ExcelWarpper : ModuleRules
 {
-	private enum EExcelAnalysis
-	{
-		XLINT,
-		//...
-	}
-
-	private readonly EExcelAnalysis ExcelAnalysis = EExcelAnalysis.XLINT;
-
-
-    public ExcelHelper(ReadOnlyTargetRules Target) : base(Target)
+    public ExcelWarpper(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
@@ -51,18 +42,5 @@ public class ExcelHelper : ModuleRules
 			{
 
 			});
-
-
-		if (ExcelAnalysis == EExcelAnalysis.XLINT)
-		{
-            PublicDependencyModuleNames.AddRange(
-                new string[]
-                {
-                    "xlnt"
-                });
-
-            PublicDefinitions.Add("EXCELANALYSIS_WITH_XLINT");
-        }
-
     }
 }

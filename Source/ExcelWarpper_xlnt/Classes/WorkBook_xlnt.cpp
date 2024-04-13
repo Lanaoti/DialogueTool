@@ -4,7 +4,6 @@
 #include "WorkSheet_xlnt.h"
 
 
-#if EXCELANALYSIS_WITH_XLINT
 /// <summary>
 /// FWorkBookWarpper_xlnt
 /// </summary>
@@ -77,4 +76,3 @@ int32 FWorkBookWarpper_xlnt::IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet)
 
 	return INDEX_NONE;
 }
-#endif

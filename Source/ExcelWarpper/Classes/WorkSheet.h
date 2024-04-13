@@ -10,7 +10,7 @@
 /// <summary>
 /// 工作表包装器接口
 /// </summary>
-class EXCELHELPER_API FWorkSheetWarpper
+class EXCELWARPPER_API FWorkSheetWarpper
 {
 public:
 	FWorkSheetWarpper() {}
@@ -23,7 +23,7 @@ public:
 
 
 USTRUCT(BlueprintType)
-struct EXCELHELPER_API FWorkSheet
+struct EXCELWARPPER_API FWorkSheet
 {
 	GENERATED_BODY()
 

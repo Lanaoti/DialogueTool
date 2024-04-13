@@ -14,7 +14,7 @@ class FWorkSheetWarpper;
 /// <summary>
 /// 工作簿包装器接口
 /// </summary>
-class EXCELHELPER_API FWorkBookWarpper
+class EXCELWARPPER_API FWorkBookWarpper
 {
 public:
 	FWorkBookWarpper() {}
@@ -35,7 +35,7 @@ public:
 /// <summary>
 /// 工作表迭代器
 /// </summary>
-class EXCELHELPER_API FWorkSheetIterator
+class EXCELWARPPER_API FWorkSheetIterator
 {
 public:
 	FWorkSheetIterator() = default;
@@ -77,7 +77,7 @@ private:
 /// <summary>
 /// 工作表常量迭代器
 /// </summary>
-class EXCELHELPER_API FConstWorkSheetIterator
+class EXCELWARPPER_API FConstWorkSheetIterator
 {
 public:
 	FConstWorkSheetIterator() = default;
@@ -120,7 +120,7 @@ private:
 /// 工作簿
 /// </summary>
 USTRUCT(BlueprintType)
-struct EXCELHELPER_API FWorkBook
+struct EXCELWARPPER_API FWorkBook
 {
 	GENERATED_BODY()
 

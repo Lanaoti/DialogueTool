@@ -19,6 +19,11 @@
 			"Name": "DialogueTool",
 			"Type": "Editor",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "ExcelWarpper_xlnt",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	]
 }

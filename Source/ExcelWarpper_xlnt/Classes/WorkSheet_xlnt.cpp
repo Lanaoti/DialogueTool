@@ -3,7 +3,6 @@
 #include "WorkSheet_xlnt.h"
 
 
-#if EXCELANALYSIS_WITH_XLINT
 /// <summary>
 /// FWorkSheetWarpper_xlnt
 /// </summary>
@@ -22,4 +21,3 @@ int32 FWorkSheetWarpper_xlnt::Rows(bool bSkipNull) const
 {
 	return WorkSheet.rows(bSkipNull).length();
 }
-#endif

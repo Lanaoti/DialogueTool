@@ -2,7 +2,7 @@
 
 #include "WorkBook.h"
 #include "WorkSheet.h"
-#include "ExcelHelper.h"
+#include "ExcelWarpperModule.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(WorkBook)
 
@@ -125,7 +125,7 @@ FConstWorkSheetIterator& FConstWorkSheetIterator::operator--()
 /// FWorkBook
 /// </summary>
 FWorkBook::FWorkBook()
-	: WorkBook(FExcelHelper::MakeWorkBookWarpper())
+	: WorkBook(FExcelWarpperModule::MakeWorkBookWarpper())
 {
 
 }

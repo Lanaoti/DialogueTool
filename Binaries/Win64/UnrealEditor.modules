@@ -3,6 +3,8 @@
 	"Modules": 
 	{
 		"DialogueTool": "UnrealEditor-DialogueTool.dll",
-		"ExcelHelper": "UnrealEditor-ExcelHelper.dll"
+		"ExcelHelper": "UnrealEditor-ExcelHelper.dll",
+		"ExcelWarpper": "UnrealEditor-ExcelWarpper.dll",
+		"ExcelWarpper_xlnt": "UnrealEditor-ExcelWarpper_xlnt.dll"
 	}
 }

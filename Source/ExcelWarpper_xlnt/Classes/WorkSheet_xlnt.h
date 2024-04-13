@@ -2,15 +2,14 @@
 
 #pragma once
 
-#include "Excel/WorkSheet.h"
-
-
-#if EXCELANALYSIS_WITH_XLINT
+#include "WorkSheet.h"
 #include <xlnt/xlnt.hpp>
+
+
 /// <summary>
 /// 基于xlnt库实现
 /// </summary>
-class EXCELHELPER_API FWorkSheetWarpper_xlnt : public FWorkSheetWarpper
+class FWorkSheetWarpper_xlnt : public FWorkSheetWarpper
 {
 public:
 	FWorkSheetWarpper_xlnt()
@@ -33,4 +32,3 @@ public:
 private:
 	xlnt::worksheet WorkSheet;
 };
-#endif

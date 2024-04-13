@@ -26,7 +26,7 @@ public class DialogueTool : ModuleRules
 			new string[]
 			{
 				"Core",
-                "ExcelHelper"
+                "ExcelWarpper"
             });
 			
 		
