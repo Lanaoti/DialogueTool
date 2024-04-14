@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CellIterator.h"
 #include "Column.generated.h"
 
 
@@ -37,6 +38,17 @@ public:
 
 	int32 Num() const;
 	FCell GetCell(int32 Index) const;
+
+public:
+	using Iterator = FCellIterator;
+	using ConstIterator = FConstCellIterator;
+
+	Iterator begin();
+	Iterator end();
+	ConstIterator begin() const;
+	ConstIterator end() const;
+	ConstIterator cbegin() const;
+	ConstIterator cend() const;
 
 private:
 	

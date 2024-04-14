@@ -41,3 +41,33 @@ FCell FColumn::GetCell(int32 Index) const
 
 	return Column->GetCell(Index);
 }
+
+FColumn::Iterator FColumn::begin()
+{
+	return Iterator(*this, 0);
+}
+
+FColumn::Iterator FColumn::end()
+{
+	return FColumn::Iterator(*this, Num());
+}
+
+FColumn::ConstIterator FColumn::begin() const
+{
+	return cbegin();
+}
+
+FColumn::ConstIterator FColumn::end() const
+{
+	return cend();
+}
+
+FColumn::ConstIterator FColumn::cbegin() const
+{
+	return ConstIterator(*this, 0);
+}
+
+FColumn::ConstIterator FColumn::cend() const
+{
+	return ConstIterator(*this, Num());
+}

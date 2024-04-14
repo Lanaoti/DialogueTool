@@ -41,3 +41,33 @@ FCell FRow::GetCell(int32 Index) const
 
 	return Row->GetCell(Index);
 }
+
+FRow::Iterator FRow::begin()
+{
+	return Iterator(*this, 0);
+}
+
+FRow::Iterator FRow::end()
+{
+	return FRow::Iterator(*this, Num());
+}
+
+FRow::ConstIterator FRow::begin() const
+{
+	return cbegin();
+}
+
+FRow::ConstIterator FRow::end() const
+{
+	return cend();
+}
+
+FRow::ConstIterator FRow::cbegin() const
+{
+	return ConstIterator(*this, 0);
+}
+
+FRow::ConstIterator FRow::cend() const
+{
+	return ConstIterator(*this, Num());
+}
