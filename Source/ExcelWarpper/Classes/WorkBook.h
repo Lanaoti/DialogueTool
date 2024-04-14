@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
+#include "WorkSheetIterator.h"
 #include "WorkBook.generated.h"
 
 
@@ -14,107 +14,23 @@ class FWorkSheetWarpper;
 /// <summary>
 /// 工作簿包装器接口
 /// </summary>
-class EXCELWARPPER_API FWorkBookWarpper
+class EXCELWARPPER_API FWorkBookWarpper : public TSharedFromThis<FWorkBookWarpper>
 {
 public:
 	FWorkBookWarpper() {}
 	virtual ~FWorkBookWarpper() {}
 
-	virtual bool Load(const FString& Filename, const FString& Password = TEXT("")) { return false; }
-	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet(const FString& Title) { return nullptr; }
-	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet(int32 Index) { return nullptr; }
-	virtual TSharedPtr<FWorkSheetWarpper> CreateWorkSheet(int32 Index = INDEX_NONE) { return nullptr; }
-	virtual TArray<FString> GetTitles() const { return TArray<FString>(); }
-	virtual int32 Num() const { return 0; }
-	virtual int32 IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet) { return INDEX_NONE; }
-	virtual bool Save() { return false; }
-	virtual bool SaveAs(const FString& Filename) { return false; }
+	virtual bool Load(const FString& Filename, const FString& Password = TEXT("")) = 0;
+	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet(const FString& Title) const = 0;
+	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet(int32 Index) const = 0;
+	virtual TSharedPtr<FWorkSheetWarpper> CreateWorkSheet(int32 Index = INDEX_NONE) = 0;
+	virtual TArray<FString> GetTitles() const = 0;
+	virtual int32 Num() const = 0;
+	virtual int32 IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet) const = 0;
+	virtual bool Save() = 0;
+	virtual bool SaveAs(const FString& Filename) = 0;
 };
 
-
-/// <summary>
-/// 工作表迭代器
-/// </summary>
-class EXCELWARPPER_API FWorkSheetIterator
-{
-public:
-	FWorkSheetIterator() = default;
-
-	FWorkSheetIterator(const FWorkSheetIterator&) = default;
-
-	FWorkSheetIterator& operator=(const FWorkSheetIterator&) = default;
-
-	FWorkSheetIterator(FWorkSheetIterator&&) = default;
-
-	FWorkSheetIterator& operator=(FWorkSheetIterator&&) = default;
-
-	~FWorkSheetIterator() = default;
-
-	FWorkSheetIterator(FWorkBook& InWorkBook, int32 InIndex);
-
-	FWorkSheet operator*();
-
-	const FWorkSheet operator*() const;
-
-	bool operator==(const FWorkSheetIterator& Comparand) const;
-
-	bool operator!=(const FWorkSheetIterator& Comparand) const;
-
-	FWorkSheetIterator operator++(int);
-
-	FWorkSheetIterator& operator++();
-
-	FWorkSheetIterator operator--(int);
-
-	FWorkSheetIterator& operator--();
-
-private:
-	FWorkBook* WorkBook = nullptr;
-
-	int32 Index = INDEX_NONE;
-};
-
-/// <summary>
-/// 工作表常量迭代器
-/// </summary>
-class EXCELWARPPER_API FConstWorkSheetIterator
-{
-public:
-	FConstWorkSheetIterator() = default;
-
-	FConstWorkSheetIterator(const FConstWorkSheetIterator&) = default;
-
-	FConstWorkSheetIterator& operator=(const FConstWorkSheetIterator&) = default;
-
-	FConstWorkSheetIterator(FConstWorkSheetIterator&&) = default;
-
-	FConstWorkSheetIterator& operator=(FConstWorkSheetIterator&&) = default;
-
-	~FConstWorkSheetIterator() = default;
-
-	FConstWorkSheetIterator(const FWorkBook& InWorkBook, int32 InIndex);
-
-	FWorkSheet operator*();
-
-	const FWorkSheet operator*() const;
-
-	bool operator==(const FConstWorkSheetIterator& Comparand) const;
-
-	bool operator!=(const FConstWorkSheetIterator& Comparand) const;
-
-	FConstWorkSheetIterator operator++(int);
-
-	FConstWorkSheetIterator& operator++();
-
-	FConstWorkSheetIterator operator--(int);
-
-	FConstWorkSheetIterator& operator--();
-
-private:
-	const FWorkBook* WorkBook = nullptr;
-
-	int32 Index = INDEX_NONE;
-};
 
 /// <summary>
 /// 工作簿
@@ -126,6 +42,7 @@ struct EXCELWARPPER_API FWorkBook
 
 public:
 	FWorkBook();
+	FWorkBook(TSharedPtr<FWorkBookWarpper> InWorkBook);
 
 	/// <summary>
 	/// 验证工作簿是否有效

@@ -4,9 +4,6 @@
 #include "WorkSheet_xlnt.h"
 
 
-/// <summary>
-/// FWorkBookWarpper_xlnt
-/// </summary>
 bool FWorkBookWarpper_xlnt::Load(const FString& Filename, const FString& Password)
 {
 	if (Password.IsEmpty())
@@ -21,29 +18,26 @@ bool FWorkBookWarpper_xlnt::Load(const FString& Filename, const FString& Passwor
 	return true;
 }
 
-TSharedPtr<FWorkSheetWarpper> FWorkBookWarpper_xlnt::GetWorkSheet(const FString& Title)
+TSharedPtr<FWorkSheetWarpper> FWorkBookWarpper_xlnt::GetWorkSheet(const FString& Title) const
 {
 	xlnt::worksheet WorkSheet = WorkBook.sheet_by_title(TCHAR_TO_UTF8(*Title));
-	return MakeShareable(new FWorkSheetWarpper_xlnt(&WorkSheet));
+	return MakeShareable(new FWorkSheetWarpper_xlnt(ConstCastSharedRef<FWorkBookWarpper>(AsShared()), WorkSheet));
 }
 
-TSharedPtr<FWorkSheetWarpper> FWorkBookWarpper_xlnt::GetWorkSheet(int32 Index)
+TSharedPtr<FWorkSheetWarpper> FWorkBookWarpper_xlnt::GetWorkSheet(int32 Index) const
 {
-	xlnt::worksheet WorkSheet = WorkBook.sheet_by_index(Index);
-	return MakeShareable(new FWorkSheetWarpper_xlnt(&WorkSheet));
+	return MakeShareable(new FWorkSheetWarpper_xlnt(ConstCastSharedRef<FWorkBookWarpper>(AsShared()), WorkBook.sheet_by_index(Index)));
 }
 
 TSharedPtr<FWorkSheetWarpper> FWorkBookWarpper_xlnt::CreateWorkSheet(int32 Index)
 {
 	if (Index == INDEX_NONE)
 	{
-		xlnt::worksheet WorkSheet = WorkBook.create_sheet();
-		return MakeShareable(new FWorkSheetWarpper_xlnt(&WorkSheet));
+		return MakeShareable(new FWorkSheetWarpper_xlnt(AsShared(), WorkBook.create_sheet()));
 	}
 	else
 	{
-		xlnt::worksheet WorkSheet = WorkBook.create_sheet(Index);
-		return MakeShareable(new FWorkSheetWarpper_xlnt(&WorkSheet));
+		return MakeShareable(new FWorkSheetWarpper_xlnt(AsShared(), WorkBook.create_sheet(Index)));
 	}
 }
 
@@ -66,7 +60,7 @@ int32 FWorkBookWarpper_xlnt::Num() const
 	return WorkBook.sheet_count();
 }
 
-int32 FWorkBookWarpper_xlnt::IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet)
+int32 FWorkBookWarpper_xlnt::IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet) const
 {
 	const TSharedPtr<FWorkSheetWarpper_xlnt> WorkSheetWarpper = StaticCastSharedPtr<FWorkSheetWarpper_xlnt>(WorkSheet);
 	if (WorkSheetWarpper.IsValid())
@@ -75,4 +69,16 @@ int32 FWorkBookWarpper_xlnt::IndexOf(TSharedPtr<FWorkSheetWarpper> WorkSheet)
 	}
 
 	return INDEX_NONE;
+}
+
+bool FWorkBookWarpper_xlnt::Save()
+{
+	check(false);
+	return false;
+}
+
+bool FWorkBookWarpper_xlnt::SaveAs(const FString& Filename)
+{
+	check(false);
+	return false;
 }

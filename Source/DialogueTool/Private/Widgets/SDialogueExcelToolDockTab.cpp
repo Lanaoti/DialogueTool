@@ -179,14 +179,14 @@ void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
 		UE_LOG(LogTemp, Log, TEXT("WorkSheet Title: %s Columns: %d Rows: %d"), *WorkSheet.GetTitle(), WorkSheet.Columns(), WorkSheet.Rows());
 	}
 
-	for (int32 i = 0; i < 10; i++)
-	{
-		TArray<FString> Titles = WorkBook.GetTitles();
-		for (const FString& Title : Titles)
-		{
-			UE_LOG(LogTemp, Log, TEXT("WorkSheet Titles: %s"), *Title);
-		}
-	}
+	//for (int32 i = 0; i < 10; i++)
+	//{
+	//	TArray<FString> Titles = WorkBook.GetTitles();
+	//	for (const FString& Title : Titles)
+	//	{
+	//		UE_LOG(LogTemp, Log, TEXT("WorkSheet Titles: %s"), *Title);
+	//	}
+	//}
 }
 
 bool SDialogueExcelToolDockTab::IsVaildWorkBook() const

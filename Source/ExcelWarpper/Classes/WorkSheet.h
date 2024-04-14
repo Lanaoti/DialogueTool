@@ -6,19 +6,29 @@
 #include "WorkBook.h"
 #include "WorkSheet.generated.h"
 
+struct FColumn;
+struct FRow;
+struct FCell;
+class FColumnWarpper;
+class FRowWarpper;
+class FCellWarpper;
 
 /// <summary>
 /// 工作表包装器接口
 /// </summary>
-class EXCELWARPPER_API FWorkSheetWarpper
+class EXCELWARPPER_API FWorkSheetWarpper : public TSharedFromThis<FWorkSheetWarpper>
 {
 public:
 	FWorkSheetWarpper() {}
 	virtual ~FWorkSheetWarpper() {}
 
-	virtual FString GetTitle() const { return TEXT(""); }
-	virtual int32 Columns(bool bSkipNull = false) const { return 0; }
-	virtual int32 Rows(bool bSkipNull = false) const { return 0; }
+	virtual TSharedPtr<FWorkBookWarpper> GetWorkBook() const = 0;
+	virtual FString GetTitle() const = 0;
+	virtual int32 Columns(bool bSkipNull = false) const = 0;
+	virtual int32 Rows(bool bSkipNull = false) const = 0;
+	virtual TSharedPtr<FColumnWarpper> GetColumn(int32 Index) const = 0;
+	virtual TSharedPtr<FRowWarpper> GetRow(int32 Index) const = 0;
+	virtual TSharedPtr<FCellWarpper> GetCell(int32 ColumnIndex, int32 RowIndex) const = 0;
 };
 
 
@@ -28,18 +38,17 @@ struct EXCELWARPPER_API FWorkSheet
 	GENERATED_BODY()
 
 public:
-	FWorkSheet()
-		: WorkSheet(nullptr)
-	{
+	FWorkSheet();
+	FWorkSheet(TSharedPtr<FWorkSheetWarpper> InWorkSheet);
+	FWorkSheet(TSharedRef<FWorkSheetWarpper> InWorkSheet);
 
-	}
+	friend struct FWorkBook;
 
-	FWorkSheet(const FWorkBook& InWorkBook, TSharedPtr<FWorkSheetWarpper> InWorkSheet)
-		: WorkBook(InWorkBook)
-		, WorkSheet(InWorkSheet)
-	{
-
-	}
+	/// <summary>
+	/// 验证工作表是否有效
+	/// </summary>
+	/// <returns>是否有效</returns>
+	bool IsValid() const;
 
 	/// <summary>
 	/// 获取工作簿
@@ -67,12 +76,28 @@ public:
 	/// <returns>数量</returns>
 	int32 Rows(bool bSkipNull = false) const;
 
-	friend struct FWorkBook;
+	/// <summary>
+	/// 获取行
+	/// </summary>
+	/// <param name="Index">行下标</param>
+	/// <returns>行对象</returns>
+	FColumn GetColumn(int32 Index) const;
 
-protected:
-	UPROPERTY(BlueprintReadOnly, Category = Excel)
-	FWorkBook WorkBook;
+	/// <summary>
+	/// 获取列
+	/// </summary>
+	/// <param name="Index">列下标</param>
+	/// <returns>列对象</returns>
+	FRow GetRow(int32 Index) const;
 
-private:
+	/// <summary>
+	/// 获取单元格
+	/// </summary>
+	/// <param name="ColumnIndex">列下标</param>
+	/// <param name="RowIndex">行下标</param>
+	/// <returns>单元格对象</returns>
+	FCell GetCell(int32 ColumnIndex, int32 RowIndex) const;
+
+private:	
 	TSharedPtr<FWorkSheetWarpper> WorkSheet;
 };
