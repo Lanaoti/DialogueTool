@@ -23,6 +23,11 @@ FRow::FRow(TSharedRef<FRowWarpper> InRow)
 
 }
 
+bool FRow::IsValid() const
+{
+	return Row.IsValid();
+}
+
 int32 FRow::Num() const
 {
 	if (!Row.IsValid())

@@ -40,6 +40,7 @@ public:
 	FRow(TSharedPtr<FRowWarpper> InRow);
 	FRow(TSharedRef<FRowWarpper> InRow);
 
+	bool IsValid() const;
 	int32 Num() const;
 	int32 GetIndex() const;
 	FWorkSheet GetWorkSheet() const;

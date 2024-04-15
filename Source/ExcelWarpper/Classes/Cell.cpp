@@ -40,7 +40,7 @@ FCell::FCell(TSharedPtr<FCellWarpper> InCell)
 
 bool FCell::IsValid() const
 {
-	return Cell.IsValid();
+	return Cell.IsValid() && (Cell->GetColumn()->GetIndex() != INDEX_NONE) && (Cell->GetRow()->GetIndex() != INDEX_NONE);
 }
 
 FWorkSheet FCell::GetWorkSheet() const

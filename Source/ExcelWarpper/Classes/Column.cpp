@@ -23,6 +23,11 @@ FColumn::FColumn(TSharedRef<FColumnWarpper> InColumn)
 
 }
 
+bool FColumn::IsValid() const
+{
+	return Column.IsValid();
+}
+
 int32 FColumn::Num() const
 {
 	if (!Column.IsValid())

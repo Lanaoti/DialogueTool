@@ -40,6 +40,7 @@ public:
 	FColumn(TSharedPtr<FColumnWarpper> InColumn);
 	FColumn(TSharedRef<FColumnWarpper> InColumn);
 
+	bool IsValid() const;
 	int32 Num() const;
 	int32 GetIndex() const;
 	FWorkSheet GetWorkSheet() const;
