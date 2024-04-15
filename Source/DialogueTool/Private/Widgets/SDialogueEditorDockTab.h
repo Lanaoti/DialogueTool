@@ -7,7 +7,12 @@
 class SDialogueEditorDockTab : public SDockTab
 {
 public:
-	SLATE_BEGIN_ARGS(SDialogueEditorDockTab) {}
+	SLATE_BEGIN_ARGS(SDialogueEditorDockTab) 
+        :_WorkBook(FWorkBook())
+        {}
+        
+    SLATE_ARGUMENT(FWorkBook, WorkBook)
+    
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);

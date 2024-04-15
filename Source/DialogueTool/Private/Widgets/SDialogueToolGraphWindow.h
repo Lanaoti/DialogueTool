@@ -11,12 +11,16 @@ class SDialogueToolGraphWindow :public SCompoundWidget
 {
 
 public:
-	SLATE_BEGIN_ARGS(SDialogueToolGraphWindow) {}
+	SLATE_BEGIN_ARGS(SDialogueToolGraphWindow) 
+		:_WorkBook(FWorkBook())
+		{}
+
+	SLATE_ARGUMENT(FWorkBook, WorkBook)
 
 	SLATE_END_ARGS()
 
 	/** Constructs this widget with InArgs */
-	void Construct(const FArguments& InArgs, const FWorkBook& WorkBook);
+	void Construct(const FArguments& InArgs);
 	
 	// Í¼±í±à¼­Æ÷¿Ø¼þ
 	TSharedPtr<SGraphEditor>GraphEditorPtr;

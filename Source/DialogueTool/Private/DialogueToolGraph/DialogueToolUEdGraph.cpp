@@ -1,5 +1,5 @@
-#include "DialogueToolUEdGraph.h"
-#include "DialogueToolUEdGraphNode.h"
+#include "Classes/DialogueToolUEdGraph.h"
+#include "Classes/DialogueToolUEdGraphNode.h"
 
 UDialogueToolUEdGraph::UDialogueToolUEdGraph(const FObjectInitializer& objectInitializer)
 	:Super(objectInitializer)
