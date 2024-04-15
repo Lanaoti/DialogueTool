@@ -1,6 +1,6 @@
 #include "SDialogueToolGraphWindow.h"
-#include "DialogueToolUEdGraph.h"
-#include "DialogueToolUEdGraphSchema.h"
+#include "Classes/DialogueToolUEdGraph.h"
+#include "Classes/DialogueToolUEdGraphSchema.h"
 
 void SDialogueToolGraphWindow::Construct(const FArguments& InArgs, const FWorkBook& WorkBook)
 {

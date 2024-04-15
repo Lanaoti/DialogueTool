@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DialogueToolUEdGraphNode.h"
+#include "Classes/DialogueToolUEdGraphNode.h"
 #include "Widgets/SDialogueToolGraphNode.h"
 
 // 定义图表节点工厂

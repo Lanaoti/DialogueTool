@@ -1,7 +1,7 @@
 #include "SDialogueToolGraphNode.h"
 #include "EditorStyleSet.h"
-#include "Widgets\SBoxPanel.h"
-#include "DialogueToolUEdGraphNode.h"
+#include "Widgets/SBoxPanel.h"
+#include "Classes/DialogueToolUEdGraphNode.h"
 
 void SDialogueToolGraphNode::Construct(const FArguments& InArgs, UDialogueToolUEdGraphNode* InNode)
 {
