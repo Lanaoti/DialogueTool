@@ -15,7 +15,7 @@ void SDialogueEditorDockTab::Construct(const FArguments& InArgs)
 
 	TSharedRef<SWidget> NewContent = 
 		SNew(SDialogueToolGraphWindow)
-		.WorkBook(FWorkBook());
+		.WorkBook(InArgs._WorkBook);
 
 	SetContent(NewContent);
 }

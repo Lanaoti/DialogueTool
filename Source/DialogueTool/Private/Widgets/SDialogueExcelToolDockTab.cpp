@@ -9,6 +9,8 @@
 #include "Styling/AppStyle.h"
 #include "DesktopPlatformModule.h"
 
+#include "ExcelWarpper.h"
+
 
 #define LOCTEXT_NAMESPACE "SDialogueExcelToolDockTab"
 
@@ -16,6 +18,8 @@ void SDialogueExcelToolDockTab::Construct(const FArguments& InArgs)
 {
 	SDockTab::Construct(SDockTab::FArguments()
 		.TabRole(ETabRole::NomadTab));
+
+	DialogueList = InArgs._DialogueList;
 
 	SetTabIcon(FDialogueToolStyle::Get().GetBrush(TEXT("DialogueTool.Icon128x128")));
 
@@ -29,12 +33,12 @@ void SDialogueExcelToolDockTab::Construct(const FArguments& InArgs)
 	TapCommands->MapAction(
 		FDialogueToolCommands::Get().SaveCurrentExcel,
 		FExecuteAction::CreateRaw(this, &SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcel),
-		FCanExecuteAction::CreateSP(this, &SDialogueExcelToolDockTab::IsVaildWorkBook));
+		FCanExecuteAction());
 
 	TapCommands->MapAction(
 		FDialogueToolCommands::Get().SaveCurrentExcelAs,
 		FExecuteAction::CreateRaw(this, &SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs),
-		FCanExecuteAction::CreateSP(this, &SDialogueExcelToolDockTab::IsVaildWorkBook));
+		FCanExecuteAction());
 
 	FilenameTextBlock = SNew(STextBlock);
 
@@ -150,12 +154,15 @@ void SDialogueExcelToolDockTab::OnClicked_OpenExcel()
 
 		if (bFileDialogOpened && OutFileNames.Num() > 0)
 		{
+			FWorkBook WorkBook;
 			WorkBook.Load(OutFileNames[0]);
 
 			if (FilenameTextBlock.IsValid())
 			{
 				FilenameTextBlock->SetText(FText::FromString(OutFileNames[0]));
 			}
+
+			DialogueList.Prase(WorkBook);
 
 			UpdateWorkBookWidget();
 		}
@@ -174,20 +181,20 @@ void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs()
 
 void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
 {
-	for (const FWorkSheet& WorkSheet : WorkBook)
-	{
-		UE_LOG(LogTemp, Log, TEXT("WorkSheet Title: %s Columns: %d Rows: %d"), *WorkSheet.GetTitle(), WorkSheet.Columns(), WorkSheet.Rows());
+	//for (const FWorkSheet& WorkSheet : WorkBook)
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("WorkSheet Title: %s Columns: %d Rows: %d"), *WorkSheet.GetTitle(), WorkSheet.Columns(), WorkSheet.Rows());
 
-		int32 Rows = WorkSheet.Rows();
-		for (int32 Index = 0; Index < Rows; Index++)
-		{
-			FRow Row = WorkSheet.GetRow(Index);
-			for (FCell Cell : Row)
-			{
-				UE_LOG(LogTemp, Log, TEXT("Cell WorkSheet: %s Column: %d Row: %d Value: %s"), *WorkSheet.GetTitle(), Cell.GetColumn().GetIndex(), Cell.GetRow().GetIndex(), *Cell.GetString());
-			}
-		}
-	}
+	//	int32 Rows = WorkSheet.Rows();
+	//	for (int32 Index = 0; Index < Rows; Index++)
+	//	{
+	//		FRow Row = WorkSheet.GetRow(Index);
+	//		for (FCell Cell : Row)
+	//		{
+	//			UE_LOG(LogTemp, Log, TEXT("Cell WorkSheet: %s Column: %d Row: %d Value: %s"), *WorkSheet.GetTitle(), Cell.GetColumn().GetIndex(), Cell.GetRow().GetIndex(), *Cell.GetString());
+	//		}
+	//	}
+	//}
 
 	//for (int32 i = 0; i < 10; i++)
 	//{
@@ -197,11 +204,6 @@ void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
 	//		UE_LOG(LogTemp, Log, TEXT("WorkSheet Titles: %s"), *Title);
 	//	}
 	//}
-}
-
-bool SDialogueExcelToolDockTab::IsVaildWorkBook() const
-{
-	return WorkBook.IsValid();
 }
 
 #undef LOCTEXT_NAMESPACE

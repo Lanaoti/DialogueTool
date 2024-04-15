@@ -48,8 +48,7 @@ TArray<FString> FWorkBookWarpper_xlnt::GetTitles() const
 	std::vector<std::string> SheetTitles = WorkBook.sheet_titles();
 	for (const std::string& Title : SheetTitles)
 	{
-		FString Temp = UTF8_TO_TCHAR(Title.c_str());
-		Results.Add(Temp);
+		Results.Add(UTF8_TO_TCHAR(Title.c_str()));
 	}
 
 	return Results;
