@@ -17,7 +17,17 @@ int32 FColumnWarpper_xlnt::Num() const
 	return WorkSheet->Columns();
 }
 
+int32 FColumnWarpper_xlnt::GetIndex() const
+{
+	return Column.index - 1;
+}
+
+TSharedPtr<FWorkSheetWarpper> FColumnWarpper_xlnt::GetWorkSheet() const
+{
+	return WorkSheet;
+}
+
 TSharedPtr<FCellWarpper> FColumnWarpper_xlnt::GetCell(int32 Index) const
 {
-	return WorkSheet->GetCell(Column.index, Index);
+	return WorkSheet->GetCell(GetIndex(), Index);
 }

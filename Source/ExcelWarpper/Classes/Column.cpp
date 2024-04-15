@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Column.h"
+#include "WorkSheet.h"
 #include "Cell.h"
 
 
@@ -32,6 +33,26 @@ int32 FColumn::Num() const
 	return Column->Num();
 }
 
+int32 FColumn::GetIndex() const
+{
+	if (!Column.IsValid())
+	{
+		return INDEX_NONE;
+	}
+
+	return Column->GetIndex();
+}
+
+FWorkSheet FColumn::GetWorkSheet() const
+{
+	if (!Column.IsValid())
+	{
+		return FWorkSheet();
+	}
+
+	return Column->GetWorkSheet();
+}
+
 FCell FColumn::GetCell(int32 Index) const
 {
 	if (!Column.IsValid())
@@ -49,7 +70,7 @@ FColumn::Iterator FColumn::begin()
 
 FColumn::Iterator FColumn::end()
 {
-	return FColumn::Iterator(*this, Num());
+	return FColumn::Iterator(*this, GetWorkSheet().Rows());
 }
 
 FColumn::ConstIterator FColumn::begin() const
@@ -69,5 +90,5 @@ FColumn::ConstIterator FColumn::cbegin() const
 
 FColumn::ConstIterator FColumn::cend() const
 {
-	return ConstIterator(*this, Num());
+	return ConstIterator(*this, GetWorkSheet().Rows());
 }

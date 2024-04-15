@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Row.h"
+#include "WorkSheet.h"
 #include "Cell.h"
 
 
@@ -32,6 +33,26 @@ int32 FRow::Num() const
 	return Row->Num();
 }
 
+int32 FRow::GetIndex() const
+{
+	if (!Row.IsValid())
+	{
+		return INDEX_NONE;
+	}
+
+	return Row->GetIndex();
+}
+
+FWorkSheet FRow::GetWorkSheet() const
+{
+	if (!Row.IsValid())
+	{
+		return FWorkSheet();
+	}
+
+	return Row->GetWorkSheet();
+}
+
 FCell FRow::GetCell(int32 Index) const
 {
 	if (!Row.IsValid())
@@ -49,7 +70,7 @@ FRow::Iterator FRow::begin()
 
 FRow::Iterator FRow::end()
 {
-	return FRow::Iterator(*this, Num());
+	return FRow::Iterator(*this, GetWorkSheet().Columns());
 }
 
 FRow::ConstIterator FRow::begin() const
@@ -69,5 +90,5 @@ FRow::ConstIterator FRow::cbegin() const
 
 FRow::ConstIterator FRow::cend() const
 {
-	return ConstIterator(*this, Num());
+	return ConstIterator(*this, GetWorkSheet().Columns());
 }

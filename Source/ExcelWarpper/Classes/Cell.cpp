@@ -72,3 +72,53 @@ FRow FCell::GetRow() const
 
 	return Cell->GetRow();
 }
+
+FString FCell::GetString() const
+{
+	if (!Cell.IsValid())
+	{
+		return TEXT("");
+	}
+
+	return Cell->GetString();
+}
+
+int32 FCell::GetInt() const
+{
+	if (!Cell.IsValid())
+	{
+		return 0;
+	}
+
+	return Cell->GetInt();
+}
+
+int64 FCell::GetInt64() const
+{
+	if (!Cell.IsValid())
+	{
+		return 0;
+	}
+
+	return Cell->GetInt64();
+}
+
+float FCell::GetFloat() const
+{
+	if (!Cell.IsValid())
+	{
+		return 0.f;
+	}
+
+	return Cell->GetFloat();
+}
+
+double FCell::GetDouble() const
+{
+	if (!Cell.IsValid())
+	{
+		return 0.0;
+	}
+
+	return Cell->GetDouble();
+}

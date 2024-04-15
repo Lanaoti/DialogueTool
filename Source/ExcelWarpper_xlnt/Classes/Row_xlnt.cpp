@@ -17,7 +17,17 @@ int32 FRowWarpper_xlnt::Num() const
 	return WorkSheet->Rows();
 }
 
+int32 FRowWarpper_xlnt::GetIndex() const
+{
+	return Row - 1;
+}
+
+TSharedPtr<FWorkSheetWarpper> FRowWarpper_xlnt::GetWorkSheet() const
+{
+	return WorkSheet;
+}
+
 TSharedPtr<FCellWarpper> FRowWarpper_xlnt::GetCell(int32 Index) const
 {
-	return WorkSheet->GetCell(Index, Row);
+	return WorkSheet->GetCell(Index, GetIndex());
 }

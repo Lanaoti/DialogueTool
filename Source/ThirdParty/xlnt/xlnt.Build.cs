@@ -184,7 +184,7 @@ public class xlnt : ModuleRules
                 {
                     { "TESTS", "0" },
                     { "STATIC", "0" },
-                    { "STATIC_CRT", "OFF" },
+                    { "STATIC_CRT", "ON" },
                     { "XLNT_CXX_LANG", "14" },
                 };
                 foreach (var Arg in Args)

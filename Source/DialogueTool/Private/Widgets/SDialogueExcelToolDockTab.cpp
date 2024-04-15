@@ -177,6 +177,16 @@ void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
 	for (const FWorkSheet& WorkSheet : WorkBook)
 	{
 		UE_LOG(LogTemp, Log, TEXT("WorkSheet Title: %s Columns: %d Rows: %d"), *WorkSheet.GetTitle(), WorkSheet.Columns(), WorkSheet.Rows());
+
+		int32 Rows = WorkSheet.Rows();
+		for (int32 Index = 0; Index < Rows; Index++)
+		{
+			FRow Row = WorkSheet.GetRow(Index);
+			for (FCell Cell : Row)
+			{
+				UE_LOG(LogTemp, Log, TEXT("Cell WorkSheet: %s Column: %d Row: %d Value: %s"), *WorkSheet.GetTitle(), Cell.GetColumn().GetIndex(), Cell.GetRow().GetIndex(), *Cell.GetString());
+			}
+		}
 	}
 
 	//for (int32 i = 0; i < 10; i++)

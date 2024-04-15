@@ -30,5 +30,25 @@ TSharedRef<FRowWarpper> FCellWarpper_xlnt::GetRow() const
 
 FString FCellWarpper_xlnt::GetString() const
 {
-	return UTF8_TO_TCHAR(Cell.to_string().c_str());
+	return UTF8_TO_TCHAR(Cell.value<std::string>().c_str());
+}
+
+int32 FCellWarpper_xlnt::GetInt() const
+{
+	return Cell.value<int32>();
+}
+
+int64 FCellWarpper_xlnt::GetInt64() const
+{
+	return Cell.value<int64>();
+}
+
+float FCellWarpper_xlnt::GetFloat() const
+{
+	return Cell.value<float>();
+}
+
+double FCellWarpper_xlnt::GetDouble() const
+{
+	return Cell.value<double>();
 }

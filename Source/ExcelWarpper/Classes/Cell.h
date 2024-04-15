@@ -36,7 +36,7 @@ public:
 /// 单元格
 /// </summary>
 USTRUCT(BlueprintType)
-struct FCell
+struct EXCELWARPPER_API FCell
 {
 	GENERATED_BODY()
 
@@ -68,6 +68,36 @@ public:
 	/// </summary>
 	/// <returns>行对象</returns>
 	FRow GetRow() const;
+
+	/// <summary>
+	/// 获取字符串值
+	/// </summary>
+	/// <returns>FString</returns>
+	FString GetString() const;
+
+	/// <summary>
+	/// 获取int32值
+	/// </summary>
+	/// <returns>int32</returns>
+	int32 GetInt() const;
+
+	/// <summary>
+	/// 获取int64值
+	/// </summary>
+	/// <returns>int64</returns>
+	int64 GetInt64() const;
+
+	/// <summary>
+	/// 获取float值
+	/// </summary>
+	/// <returns>float</returns>
+	float GetFloat() const;
+
+	/// <summary>
+	/// 获取double值
+	/// </summary>
+	/// <returns>double</returns>
+	double GetDouble() const;
 
 private:
 	TSharedPtr<FCellWarpper> Cell;

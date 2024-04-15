@@ -45,6 +45,12 @@ public:
 	FCellIterator& operator--();
 
 private:
+	enum IteratorType
+	{
+		IT_Column,
+		IT_Row
+	} Type;
+
 	union
 	{
 		FColumn* Column;
@@ -93,6 +99,12 @@ public:
 	FConstCellIterator& operator--();
 
 private:
+	enum IteratorType
+	{
+		IT_Column,
+		IT_Row
+	} Type;
+
 	union
 	{
 		const FColumn* Column;

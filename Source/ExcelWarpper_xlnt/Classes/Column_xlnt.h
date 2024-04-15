@@ -16,6 +16,8 @@ public:
 	FColumnWarpper_xlnt(TSharedRef<FWorkSheetWarpper> InWorkSheet, const xlnt::column_t& Column);
 
 	virtual int32 Num() const override;
+	virtual int32 GetIndex() const override;
+	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet() const override;
 	virtual TSharedPtr<FCellWarpper> GetCell(int32 Index) const override;
 
 private:

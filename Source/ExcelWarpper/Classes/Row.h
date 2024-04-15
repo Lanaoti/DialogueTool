@@ -7,7 +7,9 @@
 #include "Row.generated.h"
 
 
+struct FWorkSheet;
 struct FCell;
+class FWorkSheetWarpper;
 class FCellWarpper;
 
 /// <summary>
@@ -20,6 +22,8 @@ public:
 	virtual ~FRowWarpper() {}
 
 	virtual int32 Num() const = 0;
+	virtual int32 GetIndex() const = 0;
+	virtual TSharedPtr<FWorkSheetWarpper> GetWorkSheet() const = 0;
 	virtual TSharedPtr<FCellWarpper> GetCell(int32 Index) const = 0;
 };
 
@@ -27,7 +31,7 @@ public:
 /// ÐÐ
 /// </summary>
 USTRUCT(BlueprintType)
-struct FRow 
+struct EXCELWARPPER_API FRow
 {
 	GENERATED_BODY()
 
@@ -37,6 +41,8 @@ public:
 	FRow(TSharedRef<FRowWarpper> InRow);
 
 	int32 Num() const;
+	int32 GetIndex() const;
+	FWorkSheet GetWorkSheet() const;
 	FCell GetCell(int32 Index) const;
 
 public:

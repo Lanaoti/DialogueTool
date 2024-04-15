@@ -18,6 +18,10 @@ public:
 	virtual TSharedRef<FColumnWarpper> GetColumn() const override;
 	virtual TSharedRef<FRowWarpper> GetRow() const override;
 	virtual FString GetString() const override;
+	virtual int32 GetInt() const override;
+	virtual int64 GetInt64() const override;
+	virtual float GetFloat() const override;
+	virtual double GetDouble() const override;
 
 private:
 	
