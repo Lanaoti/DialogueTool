@@ -1,12 +1,15 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Uobject/objectMacros.h"
+#include "UObject/ObjectMacros.h"
 #include "EdGraph/EdGraphschema.h"
-#include "DialogueToolUEdGraphSchema.generated.h"
+#include "DialogueEditorEdGraphSchema.generated.h"
+
 
 UCLASS(MinimalAPI)
-class UDialogueToolUEdGraphSchema : public UEdGraphSchema
+class UDialogueEditorEdGraphSchema : public UEdGraphSchema
 {
 	GENERATED_UCLASS_BODY()
 

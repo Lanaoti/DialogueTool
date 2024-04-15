@@ -1,16 +1,18 @@
-#include "SDialogueToolGraphNode.h"
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#include "SDialogueEditorGraphNode.h"
 #include "EditorStyleSet.h"
 #include "Widgets/SBoxPanel.h"
-#include "EdGraph/DialogueToolUEdGraphNode.h"
+#include "EdGraph/DialogueEditorEdGraphNode.h"
 
-void SDialogueToolGraphNode::Construct(const FArguments& InArgs, UDialogueToolUEdGraphNode* InNode)
+void SDialogueEditorGraphNode::Construct(const FArguments& InArgs, UDialogueEditorEdGraphNode* InNode)
 {
 	GraphNode = InNode;
 	UpdateGraphNode();
 	CreateDialogueText();
 }
 
-TSharedRef<SWidget> SDialogueToolGraphNode::CreateNodeContentArea()
+TSharedRef<SWidget> SDialogueEditorGraphNode::CreateNodeContentArea()
 {
 	// NODE CONTENT AREA
 	return SNew(SBorder)
@@ -45,9 +47,9 @@ TSharedRef<SWidget> SDialogueToolGraphNode::CreateNodeContentArea()
 		];
 }
 
-TSharedRef<SWidget> SDialogueToolGraphNode::CreateDialogueText()
+TSharedRef<SWidget> SDialogueEditorGraphNode::CreateDialogueText()
 {
-	UDialogueToolUEdGraphNode* TestNode = Cast<UDialogueToolUEdGraphNode>(GraphNode);
+	UDialogueEditorEdGraphNode* TestNode = Cast<UDialogueEditorEdGraphNode>(GraphNode);
 	auto Num = TestNode->DialogueTexts.Num();
 	UE_LOG(LogTemp, Log, TEXT("TestNode TestNode TestNode:%d"), Num);
 

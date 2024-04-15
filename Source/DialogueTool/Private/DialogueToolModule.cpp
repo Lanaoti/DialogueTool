@@ -9,7 +9,8 @@
 #include "Widgets/SDialogueExcelToolDockTab.h"
 #include "ToolMenus.h"
 #include "EdGraphUtilities.h"
-#include "DialogueToolGraphNodeFactory.h"
+#include "EdGraph/DialogueEditorGraphNodeFactory.h"
+
 
 static const FName DialogueExcelToolTabName("DialogueExcelTool");
 static const FName DialogueEditorTabName("DialogueEditor");
@@ -19,7 +20,7 @@ static const FName DialogueEditorTabName("DialogueEditor");
 void FDialogueToolModule::StartupModule()
 {
 	//注册图表节点工厂
-	FEdGraphUtilities::RegisterVisualNodeFactory(MakeShareable(new FDialogueToolNodeFactory()));
+	FEdGraphUtilities::RegisterVisualNodeFactory(MakeShareable(new FDialogueEditorNodeFactory()));
 
 	FDialogueToolStyle::Initialize();
 	FDialogueToolStyle::ReloadTextures();

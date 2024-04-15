@@ -1,3 +1,5 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,11 +9,11 @@
 #include "ExcelWarpper.h"
 
 
-class SDialogueToolGraphWindow :public SCompoundWidget
+class SDialogueEditorGraphWindow :public SCompoundWidget
 {
 
 public:
-	SLATE_BEGIN_ARGS(SDialogueToolGraphWindow) 
+	SLATE_BEGIN_ARGS(SDialogueEditorGraphWindow)
 		:_WorkBook(FWorkBook())
 		{}
 
@@ -26,6 +28,6 @@ public:
 	TSharedPtr<SGraphEditor>GraphEditorPtr;
 	
 	// Õº±Ì∂‘œÛ
-	class UDialogueToolUEdGraph * Graphobj;
+	class UDialogueEditorEdGraph * Graphobj;
 
 };

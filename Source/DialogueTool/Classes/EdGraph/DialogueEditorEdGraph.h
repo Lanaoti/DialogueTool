@@ -1,13 +1,16 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Uobject/objectMacros.h"
+#include "UObject/ObjectMacros.h"
 #include "EdGraph/EdGraph.h"
 #include "ExcelWarpper.h"
-#include "DialogueToolUEdGraph.generated.h"
+#include "DialogueEditorEdGraph.generated.h"
+
 
 UCLASS()
-class UDialogueToolUEdGraph : public UEdGraph
+class UDialogueEditorEdGraph : public UEdGraph
 {
 	GENERATED_UCLASS_BODY()
 
@@ -15,7 +18,7 @@ public:
 
 	void ReBiuldGraph(const FWorkBook& WorkBook);
 
-	class UDialogueToolUEdGraphNode* CreateTestNode();
+	class UDialogueEditorEdGraphNode* CreateTestNode();
 
 private:
 

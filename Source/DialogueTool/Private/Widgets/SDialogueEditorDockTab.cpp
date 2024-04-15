@@ -3,7 +3,7 @@
 #include "SDialogueEditorDockTab.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
-#include "Widgets/SDialogueToolGraphWindow.h"
+#include "Widgets/SDialogueEditorGraphWindow.h"
 
 
 #define LOCTEXT_NAMESPACE "SDialogueEditorDockTab"
@@ -14,7 +14,7 @@ void SDialogueEditorDockTab::Construct(const FArguments& InArgs)
 		.TabRole(ETabRole::NomadTab));
 
 	TSharedRef<SWidget> NewContent = 
-		SNew(SDialogueToolGraphWindow)
+		SNew(SDialogueEditorGraphWindow)
 		.WorkBook(InArgs._WorkBook);
 
 	SetContent(NewContent);

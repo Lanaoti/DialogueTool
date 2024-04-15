@@ -1,12 +1,15 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Uobject/objectMacros.h"
+#include "UObject/ObjectMacros.h"
 #include "EdGraph/EdGraph.h"
-#include "DialogueToolUEdGraphNode.generated.h"
+#include "DialogueEditorEdGraphNode.generated.h"
+
 
 UCLASS()
-class UDialogueToolUEdGraphNode : public UEdGraphNode
+class UDialogueEditorEdGraphNode : public UEdGraphNode
 {
 	GENERATED_UCLASS_BODY()
 
