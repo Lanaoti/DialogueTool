@@ -51,7 +51,8 @@ public class xlnt : ModuleRules
 
         bool bIsDebug = (ConfigName == "Debug");
 
-        List<string> DistFiles = new List<string> { DLLPath, LIBPath };
+        //List<string> DistFiles = new List<string> { DLLPath, LIBPath };
+        List<string> DistFiles = new List<string> { LIBPath };
         if (bIsDebug)
         {
             DistFiles.Add(PDBPath);
@@ -65,7 +66,7 @@ public class xlnt : ModuleRules
 
         PublicDelayLoadDLLs.Add(LibraryName);
         PublicAdditionalLibraries.Add(LIBPath);
-        RuntimeDependencies.Add(DLLPath);
+        //RuntimeDependencies.Add(DLLPath);
         if (bIsDebug)
         {
             RuntimeDependencies.Add(PDBPath);
@@ -183,8 +184,8 @@ public class xlnt : ModuleRules
                 var Args = new Dictionary<string, string>
                 {
                     { "TESTS", "0" },
-                    { "STATIC", "0" },
-                    { "STATIC_CRT", "ON" },
+                    { "STATIC", "1" },
+                    { "STATIC_CRT", "OFF" },
                     { "XLNT_CXX_LANG", "17" },
                 };
                 foreach (var Arg in Args)

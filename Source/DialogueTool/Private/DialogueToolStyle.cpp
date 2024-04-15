@@ -46,6 +46,7 @@ TSharedRef< FSlateStyleSet > FDialogueToolStyle::Create()
 	Style->Set("DialogueTool.Icon20x20", new IMAGE_BRUSH(TEXT("Icon20"), Icon20x20));
 	Style->Set("DialogueTool.Icon128x128", new IMAGE_BRUSH(TEXT("Icon128"), Icon128x128));
 	Style->Set("DialogueTool.OpenExcel", new IMAGE_BRUSH(TEXT("OpenExcel"), Icon20x20));
+	Style->Set("DialogueTool.ReloadExcel", new IMAGE_BRUSH(TEXT("ReloadExcel"), Icon20x20));
 	Style->Set("DialogueTool.SaveCurrentExcel", new IMAGE_BRUSH(TEXT("SaveCurrentExcel"), Icon20x20));
 	Style->Set("DialogueTool.SaveCurrentExcelAs", new IMAGE_BRUSH(TEXT("SaveCurrentExcelAs"), Icon20x20));
 

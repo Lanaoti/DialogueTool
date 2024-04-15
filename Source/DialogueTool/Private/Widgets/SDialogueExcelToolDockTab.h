@@ -33,13 +33,17 @@ protected:
 
 protected:
     void OnClicked_OpenExcel();
+    void OnClicked_ReloadExcel();
     void OnClicked_SaveCurrentExcel();
     void OnClicked_SaveCurrentExcelAs();
 
-    void UpdateWorkBookWidget();
+    void OpenExcel(const FString& Filename);
+    void UpdateDialogueListWidget();
 
 private:
     FDialogueList DialogueList;
+
+    FString ExcelFilename;
 
     TSharedPtr<STextBlock> FilenameTextBlock;
 

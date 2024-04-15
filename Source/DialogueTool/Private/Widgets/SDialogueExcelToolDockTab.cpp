@@ -31,6 +31,11 @@ void SDialogueExcelToolDockTab::Construct(const FArguments& InArgs)
 		FCanExecuteAction());
 
 	TapCommands->MapAction(
+		FDialogueToolCommands::Get().ReloadExcel,
+		FExecuteAction::CreateRaw(this, &SDialogueExcelToolDockTab::OnClicked_ReloadExcel),
+		FCanExecuteAction());
+
+	TapCommands->MapAction(
 		FDialogueToolCommands::Get().SaveCurrentExcel,
 		FExecuteAction::CreateRaw(this, &SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcel),
 		FCanExecuteAction());
@@ -120,6 +125,7 @@ void SDialogueExcelToolDockTab::HandlePullDownFileMenu(FMenuBuilder& MenuBuilder
 	MenuBuilder.BeginSection(TEXT("File"));
 	{
 		MenuBuilder.AddMenuEntry(FDialogueToolCommands::Get().OpenExcel);
+		MenuBuilder.AddMenuEntry(FDialogueToolCommands::Get().ReloadExcel);
 		MenuBuilder.AddMenuEntry(FDialogueToolCommands::Get().SaveCurrentExcel);
 		MenuBuilder.AddMenuEntry(FDialogueToolCommands::Get().SaveCurrentExcelAs);
 	}
@@ -154,19 +160,21 @@ void SDialogueExcelToolDockTab::OnClicked_OpenExcel()
 
 		if (bFileDialogOpened && OutFileNames.Num() > 0)
 		{
-			FWorkBook WorkBook;
-			WorkBook.Load(OutFileNames[0]);
+			ExcelFilename = OutFileNames[0];
 
 			if (FilenameTextBlock.IsValid())
 			{
-				FilenameTextBlock->SetText(FText::FromString(OutFileNames[0]));
+				FilenameTextBlock->SetText(FText::FromString(ExcelFilename));
 			}
 
-			DialogueList.Prase(WorkBook);
-
-			UpdateWorkBookWidget();
+			OpenExcel(ExcelFilename);
 		}
 	}
+}
+
+void SDialogueExcelToolDockTab::OnClicked_ReloadExcel()
+{
+	OpenExcel(ExcelFilename);
 }
 
 void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcel()
@@ -179,31 +187,42 @@ void SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs()
 	UE_LOG(LogTemp, Log, TEXT("SDialogueExcelToolDockTab::OnClicked_SaveCurrentExcelAs"));
 }
 
-void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
+void SDialogueExcelToolDockTab::OpenExcel(const FString& Filename)
 {
-	FDialogueList DialogueListTests;
-	
-	FDialogueData DialogueData1;
-	DialogueData1.ID = TEXT("1");
-	DialogueData1.Fragments.Add(TEXT("DialogueData111"));
-	DialogueData1.Fragments.Add(TEXT("DialogueData112"));
-	DialogueData1.Fragments.Add(TEXT("DialogueData113"));
-	DialogueListTests.List.Add(DialogueData1.ID, DialogueData1);
+	FWorkBook WorkBook;
+	WorkBook.Load(Filename);
 
-	FDialogueData DialogueData2;
-	DialogueData2.ID = TEXT("2");
-	DialogueData2.Fragments.Add(TEXT("DialogueData211"));
-	DialogueData2.Fragments.Add(TEXT("DialogueData212"));
-	DialogueData2.Fragments.Add(TEXT("DialogueData213"));
-	DialogueListTests.List.Add(DialogueData2.ID, DialogueData2);
+	for (const FWorkSheet& WorkSheet : WorkBook)
+	{
+		UE_LOG(LogTemp, Log, TEXT("WorkSheet Title: %s Columns: %d Rows: %d"), *WorkSheet.GetTitle(), WorkSheet.Columns(), WorkSheet.Rows());
 
-	FDialogueData DialogueData3;
-	DialogueData3.ID = TEXT("3");
-	DialogueData3.Fragments.Add(TEXT("DialogueData311"));
-	DialogueData3.Fragments.Add(TEXT("DialogueData312"));
-	DialogueData3.Fragments.Add(TEXT("DialogueData313"));
-	DialogueListTests.List.Add(DialogueData3.ID, DialogueData3);
+		int32 Rows = WorkSheet.Rows();
+		for (int32 Index = 0; Index < Rows; Index++)
+		{
+			FRow Row = WorkSheet.GetRow(Index);
+			for (FCell Cell : Row)
+			{
+				UE_LOG(LogTemp, Log, TEXT("Cell WorkSheet: %s Column: %d Row: %d Value: %s"), *WorkSheet.GetTitle(), Cell.GetColumn().GetIndex(), Cell.GetRow().GetIndex(), *Cell.GetString());
+			}
+		}
+	}
 
+	for (int32 i = 0; i < 10; i++)
+	{
+		TArray<FString> Titles = WorkBook.GetTitles();
+		for (const FString& Title : Titles)
+		{
+			UE_LOG(LogTemp, Log, TEXT("WorkSheet Titles: %s"), *Title);
+		}
+	}
+
+	DialogueList.Prase(WorkBook);
+
+	UpdateDialogueListWidget();
+}
+
+void SDialogueExcelToolDockTab::UpdateDialogueListWidget()
+{
 	if (Content.IsValid())
 	{
 		Content->ClearChildren();
@@ -214,7 +233,7 @@ void SDialogueExcelToolDockTab::UpdateWorkBookWidget()
 			VerticalBox
 		];
 
-		for (TPair<FString, FDialogueData> Pair : DialogueListTests.List)
+		for (TPair<FString, FDialogueData> Pair : DialogueList.List)
 		{
 			TSharedRef<SVerticalBox> DialogueBox = SNew(SVerticalBox);
 			VerticalBox->AddSlot()

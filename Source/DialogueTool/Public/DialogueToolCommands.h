@@ -23,6 +23,7 @@ public:
 	TSharedPtr< FUICommandInfo > OpenDialogueExcelTool;
 	TSharedPtr< FUICommandInfo > OpenDialogueEditor;
 	TSharedPtr< FUICommandInfo > OpenExcel;
+	TSharedPtr< FUICommandInfo > ReloadExcel;
 	TSharedPtr< FUICommandInfo > SaveCurrentExcel;
 	TSharedPtr< FUICommandInfo > SaveCurrentExcelAs;
 };
