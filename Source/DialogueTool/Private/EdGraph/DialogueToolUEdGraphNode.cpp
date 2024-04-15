@@ -1,4 +1,4 @@
-#include "Classes/DialogueToolUEdGraphNode.h"
+#include "EdGraph/DialogueToolUEdGraphNode.h"
 
 UDialogueToolUEdGraphNode::UDialogueToolUEdGraphNode(const FObjectInitializer& objectInitializer)
 	:Super(objectInitializer)
