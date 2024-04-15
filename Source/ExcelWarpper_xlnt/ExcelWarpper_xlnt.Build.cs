@@ -8,6 +8,8 @@ public class ExcelWarpper_xlnt : ModuleRules
     {
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
+        CppStandard = CppStandardVersion.Cpp17;
+
         OptimizeCode = CodeOptimization.InShippingBuildsOnly;
 
         PublicIncludePaths.AddRange(

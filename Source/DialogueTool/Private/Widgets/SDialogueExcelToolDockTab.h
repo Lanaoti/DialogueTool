@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Widgets/Docking/SDockTab.h"
-#include "ExcelWarpper.h"
+#include "DialogueTypes.h"
 
 
 class SWidget;
@@ -13,7 +13,13 @@ class FTabManager;
 class SDialogueExcelToolDockTab : public SDockTab
 {
 public:
-    SLATE_BEGIN_ARGS(SDialogueExcelToolDockTab) {}
+    SLATE_BEGIN_ARGS(SDialogueExcelToolDockTab)
+        : _DialogueList()
+        {
+
+        }
+
+        SLATE_ARGUMENT(FDialogueList, DialogueList)
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);
@@ -31,10 +37,9 @@ protected:
     void OnClicked_SaveCurrentExcelAs();
 
     void UpdateWorkBookWidget();
-    bool IsVaildWorkBook() const;
 
 private:
-    FWorkBook WorkBook;
+    FDialogueList DialogueList;
 
     TSharedPtr<STextBlock> FilenameTextBlock;
 

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "Widgets/Docking/SDockTab.h"
+#include "ExcelWarpper.h"
+
 
 class SDialogueEditorDockTab : public SDockTab
 {
