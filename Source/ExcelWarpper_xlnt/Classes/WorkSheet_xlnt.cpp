@@ -36,16 +36,22 @@ int32 FWorkSheetWarpper_xlnt::Rows(bool bSkipNull) const
 
 TSharedPtr<FColumnWarpper> FWorkSheetWarpper_xlnt::GetColumn(int32 Index) const
 {
+	check(Index >= 0);
+
 	return MakeShareable(new FColumnWarpper_xlnt(ConstCastSharedRef<FWorkSheetWarpper>(AsShared()), xlnt::column_t(Index + 1)));
 }
 
 TSharedPtr<FRowWarpper> FWorkSheetWarpper_xlnt::GetRow(int32 Index) const
 {
+	check(Index >= 0);
+
 	return MakeShareable(new FRowWarpper_xlnt(ConstCastSharedRef<FWorkSheetWarpper>(AsShared()), xlnt::row_t(Index + 1)));
 }
 
 TSharedPtr<FCellWarpper> FWorkSheetWarpper_xlnt::GetCell(int32 ColumnIndex, int32 RowIndex) const
 {
+	check(ColumnIndex >= 0 && RowIndex >= 0);
+
 	xlnt::cell_reference CellReference = xlnt::cell_reference(ColumnIndex + 1, RowIndex + 1);
 	if (WorkSheet.has_cell(CellReference))
 	{
