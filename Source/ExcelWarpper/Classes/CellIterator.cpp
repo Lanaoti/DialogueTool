@@ -14,7 +14,10 @@ FCellIterator::FCellIterator(FColumn& InColumn, int32 InIndex)
 	, Column(&InColumn)
 	, Index(InIndex)
 {
-	
+	if (Column->GetIndex() == -1 || Index == -1)
+	{
+		check(false);
+	}
 }
 
 FCellIterator::FCellIterator(FRow& InRow, int32 InIndex)
@@ -22,7 +25,10 @@ FCellIterator::FCellIterator(FRow& InRow, int32 InIndex)
 	, Row(&InRow)
 	, Index(InIndex)
 {
-	
+	if (Row->GetIndex() == -1 || Index == -1)
+	{
+		check(false);
+	}
 }
 
 FCell FCellIterator::operator*()

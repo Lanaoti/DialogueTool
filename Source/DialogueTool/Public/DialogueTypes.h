@@ -5,6 +5,17 @@
 #include "CoreMinimal.h"
 
 struct FWorkBook;
+struct FColumn;
+
+struct FDialogueFragment
+{
+	FDialogueFragment();
+	~FDialogueFragment();
+
+	FString Speaker;
+
+	FString Content;
+};
 
 struct FDialogueData
 {
@@ -13,7 +24,7 @@ struct FDialogueData
 
 	FString ID;
 
-	TArray<FString> Fragments;
+	TArray<FDialogueFragment> Fragments;
 };
 
 struct FDialogueList
@@ -22,6 +33,8 @@ struct FDialogueList
 	~FDialogueList();
 
 	void Prase(const FWorkBook& WorkBook);
+
+	FColumn GetColumn(const FWorkSheet& WorkSheet, const FString& Value);
 
 	TMap<FString, FDialogueData> List;
 };
