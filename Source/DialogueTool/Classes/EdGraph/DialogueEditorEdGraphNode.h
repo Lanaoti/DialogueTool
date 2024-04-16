@@ -7,13 +7,14 @@
 #include "EdGraph/EdGraph.h"
 #include "DialogueEditorEdGraphNode.generated.h"
 
+struct FDialogueFragment;
 
 UCLASS()
 class UDialogueEditorEdGraphNode : public UEdGraphNode
 {
 	GENERATED_UCLASS_BODY()
 
-	TArray<FText> DialogueTexts;
+	TArray<FDialogueFragment> Fragments;
 
 	virtual void AllocateDefaultPins() override;
 

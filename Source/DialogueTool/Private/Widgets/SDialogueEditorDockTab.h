@@ -3,17 +3,18 @@
 #pragma once
 
 #include "Widgets/Docking/SDockTab.h"
-#include "ExcelWarpper.h"
-
+#include "DialogueTypes.h"
 
 class SDialogueEditorDockTab : public SDockTab
 {
 public:
 	SLATE_BEGIN_ARGS(SDialogueEditorDockTab) 
-        :_WorkBook(FWorkBook())
-        {}
-        
-    SLATE_ARGUMENT(FWorkBook, WorkBook)
+		: _DialogueList()
+		{
+
+		}
+
+	SLATE_ARGUMENT(FDialogueList, DialogueList)
     
     SLATE_END_ARGS()
 

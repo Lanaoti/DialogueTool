@@ -251,12 +251,12 @@ void SDialogueExcelToolDockTab::UpdateDialogueListWidget()
 						]
 				];
 
-			for (const FString& Fragment : Pair.Value.Fragments)
+			for (const FDialogueFragment& Fragment : Pair.Value.Fragments)
 			{
 				DialogueBox->AddSlot()
 					[
 						SNew(STextBlock)
-							.Text(FText::FromString(Fragment))
+							.Text(FText::FromString(Fragment.Speaker + TEXT(":") + Fragment.Content))
 					];
 			}
 		}

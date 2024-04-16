@@ -49,13 +49,13 @@ TSharedRef<SWidget> SDialogueEditorGraphNode::CreateNodeContentArea()
 
 TSharedRef<SWidget> SDialogueEditorGraphNode::CreateDialogueText()
 {
-	UDialogueEditorEdGraphNode* TestNode = Cast<UDialogueEditorEdGraphNode>(GraphNode);
-	auto Num = TestNode->DialogueTexts.Num();
-	UE_LOG(LogTemp, Log, TEXT("TestNode TestNode TestNode:%d"), Num);
+	UDialogueEditorEdGraphNode* Node = Cast<UDialogueEditorEdGraphNode>(GraphNode);
+	auto Num = Node->Fragments.Num();
+	UE_LOG(LogTemp, Log, TEXT("Node Node Node:%d"), Num);
 
 	for (int i = 0; i< Num; ++i)
 	{
-		FText TempText = TestNode->DialogueTexts[i];
+		FText TempText = FText::FromString(Node->Fragments[i].Speaker + TEXT("") + Node->Fragments[i].Content);
 
 		auto NewSlot = DialogueTextBox->AddSlot();
 		NewSlot.AutoHeight();

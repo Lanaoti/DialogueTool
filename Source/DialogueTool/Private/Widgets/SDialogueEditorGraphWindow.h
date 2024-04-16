@@ -6,7 +6,6 @@
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/SCompoundWidget.h"
 #include "GraphEditor.h"
-#include "ExcelWarpper.h"
 
 
 class SDialogueEditorGraphWindow :public SCompoundWidget
@@ -14,10 +13,12 @@ class SDialogueEditorGraphWindow :public SCompoundWidget
 
 public:
 	SLATE_BEGIN_ARGS(SDialogueEditorGraphWindow)
-		:_WorkBook(FWorkBook())
-		{}
+		: _DialogueList()
+		{
 
-	SLATE_ARGUMENT(FWorkBook, WorkBook)
+		}
+
+	SLATE_ARGUMENT(FDialogueList, DialogueList)
 
 	SLATE_END_ARGS()
 

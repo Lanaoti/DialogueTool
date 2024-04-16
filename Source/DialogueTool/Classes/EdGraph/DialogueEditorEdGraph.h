@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "UObject/ObjectMacros.h"
 #include "EdGraph/EdGraph.h"
-#include "ExcelWarpper.h"
 #include "DialogueEditorEdGraph.generated.h"
 
+
+struct FDialogueList;
+struct FDialogueData;
 
 UCLASS()
 class UDialogueEditorEdGraph : public UEdGraph
@@ -16,9 +18,9 @@ class UDialogueEditorEdGraph : public UEdGraph
 
 public:
 
-	void ReBiuldGraph(const FWorkBook& WorkBook);
+	void ReBiuldGraph(const FDialogueList& DialogueList);
 
-	class UDialogueEditorEdGraphNode* CreateTestNode();
+	class UDialogueEditorEdGraphNode* CreateTestNode(const FDialogueData& DialogueData);
 
 private:
 

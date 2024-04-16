@@ -2,6 +2,7 @@
 
 #include "EdGraph/DialogueEditorEdGraph.h"
 #include "EdGraph/DialogueEditorEdGraphNode.h"
+#include "DialogueTypes.h"
 
 
 UDialogueEditorEdGraph::UDialogueEditorEdGraph(const FObjectInitializer& objectInitializer)
@@ -10,23 +11,28 @@ UDialogueEditorEdGraph::UDialogueEditorEdGraph(const FObjectInitializer& objectI
 
 }
 
-void UDialogueEditorEdGraph::ReBiuldGraph(const FWorkBook& WorkBook)
+void UDialogueEditorEdGraph::ReBiuldGraph(const FDialogueList& DialogueList)
 {
-	auto Node1 = CreateTestNode();
-	auto Node2 = CreateTestNode();
+	for (TPair<FString, FDialogueData> Pair : DialogueList.List)
+	{
+		auto NewNode = CreateTestNode(Pair.Value);
+		if (NewNode != nullptr)
+		{
+			NewNode->NodePosX = NodeX;
+			NewNode->NodePosY = NodeY;
 
-	NodeX += 100;
-	NodeY += 100;
-
-	Node2->NodePosX = NodeX;
-	Node2->NodePosY = NodeY;
+			NodeX += 100;
+			NodeY += 100;
+		}
+	}
 }
 
-UDialogueEditorEdGraphNode* UDialogueEditorEdGraph::CreateTestNode()
+UDialogueEditorEdGraphNode* UDialogueEditorEdGraph::CreateTestNode(const FDialogueData& DialogueData)
 {
 	FGraphNodeCreator<UDialogueEditorEdGraphNode> NodeCreator(*this);
 	UDialogueEditorEdGraphNode* NewNode = NodeCreator.CreateNode();
-	NewNode->DialogueTexts = {FText::FromString(TEXT("111")), FText::FromString(TEXT("222")), FText::FromString(TEXT("333")) };
+
+	NewNode->Fragments = TArray<FDialogueFragment>(DialogueData.Fragments);
 	NodeCreator.Finalize();
 
 	return NewNode;

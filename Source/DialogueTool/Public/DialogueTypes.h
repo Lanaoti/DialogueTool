@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 
 struct FWorkBook;
+struct FWorkSheet;
 struct FColumn;
 
 struct FDialogueFragment
